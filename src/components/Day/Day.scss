@@ -1,5 +1,10 @@
+@import "../../variables.scss";
+
 .calendar-day {
-  height: 19%;
-  width: 14%;
-  border: 1px solid red;
+  height: $day-height;
+  width: $day-width;
+  min-height: $day-min-height;
+  font-size: 1.2rem;
+  margin-left: 2%;
+  margin-bottom: 2%;
 }

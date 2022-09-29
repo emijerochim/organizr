@@ -1,11 +1,27 @@
-import Calendar from "./components/Calendar/Calendar";
+import MonthCalendar from "./components/Calendars/MonthCalendar";
+import YearCalendar from "./components/Calendars/YearCalendar";
+import NavBar from "./components/NavBar/NavBar";
+import React, { useState } from "react";
+import moment from "moment/moment";
 import "./App.css";
-import days from "./days";
 
 function App() {
+  const [viewDate, setViewDate] = useState(moment());
+  const [viewType, setViewType] = useState("month");
+
   return (
     <div className="App">
-      <Calendar days={days} />
+      <NavBar
+        setViewDate={setViewDate}
+        setViewType={setViewType}
+        viewDate={viewDate}
+        viewType={viewType}
+      />
+      {viewType === "month" ? (
+        <MonthCalendar viewDate={viewDate} />
+      ) : (
+        <YearCalendar viewDate={viewDate} />
+      )}
     </div>
   );
 }
