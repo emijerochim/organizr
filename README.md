@@ -2,13 +2,24 @@
 
 It auths the login with a users database in MongoDB Atlas, gets transactions from the backend API, shows them in a month or year view using Chart.js for the data visualization and Moment.js for the calendar
 
-### 📱 Frontend: HTML5, CSS3, SASS, React.js
-### 🖥️ Backend: Node.js, Express, Mongoose, Google Cloud Engine
-### 💾 Database: MongoDB Atlas
-### 🧰 Tools: Git, VS Code, Nodemon, Trello
-### 📚 Libraries: Moment.js, Chart.js
+_________________________
 
-## Database
+### 📱 Frontend
+HTML5, CSS3, SASS, React.js
+
+### 🖥️ Backend
+Node.js, Express, Mongoose, Google Cloud Engine
+
+### 💾 Database
+MongoDB Atlas
+
+### 🧰 Tools
+Git, VS Code, Nodemon, Trello
+
+### 📚 Libraries
+Moment.js, Chart.js
+
+### 📂 Database
 ```
 {
  "username": String,
@@ -34,6 +45,7 @@ It auths the login with a users database in MongoDB Atlas, gets transactions fro
  ]
 }
 ```
+________________
 
 ### Frontend code:
 [github.com/emijerochim/organizr](github.com/emijerochim/organizr)
