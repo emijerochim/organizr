@@ -8,7 +8,7 @@ _________________________
 * HTML5, CSS3, SASS, React.js
 
 ### 🖥️ Backend
-* Node.js, Express, Mongoose, Google Cloud Engine
+* Node.js, Express, Mongoose
 
 ### 💾 Database
 * MongoDB Atlas
