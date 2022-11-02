@@ -1,28 +1,48 @@
-import MonthCalendar from "./components/Calendars/MonthCalendar";
-import YearCalendar from "./components/Calendars/YearCalendar";
-import NavBar from "./components/NavBar/NavBar";
 import React, { useState } from "react";
-import moment from "moment/moment";
-import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Home from "./routes/Home/Home";
+import SignIn from "./routes/SignIn/SignIn";
+import Register from "./routes/Register/Register";
 
 function App() {
-  const [viewDate, setViewDate] = useState(moment());
-  const [viewType, setViewType] = useState("month");
+  const [user, setUser] = useState({
+    loggedIn: false,
+    id: "",
+    username: "",
+    email: "",
+    transactions: [],
+    categories: [],
+  });
 
   return (
-    <div className="App">
-      <NavBar
-        setViewDate={setViewDate}
-        setViewType={setViewType}
-        viewDate={viewDate}
-        viewType={viewType}
-      />
-      {viewType === "month" ? (
-        <MonthCalendar viewDate={viewDate} />
-      ) : (
-        <YearCalendar viewDate={viewDate} />
-      )}
-    </div>
+    <main>
+      <Routes>
+        <Route
+          path="/"
+          element={user.loggedIn ? <Home /> : <Navigate to="/register" />}
+        />
+        <Route
+          path="/signin"
+          element={
+            user.loggedIn ? (
+              <Navigate to="/" />
+            ) : (
+              <SignIn user={user} setUser={setUser} />
+            )
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            user.loggedIn ? (
+              <Navigate to="/signin" />
+            ) : (
+              <Register user={user} setUser={setUser} />
+            )
+          }
+        />
+      </Routes>
+    </main>
   );
 }
 
