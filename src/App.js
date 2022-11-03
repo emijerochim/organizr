@@ -19,7 +19,9 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={user.loggedIn ? <Home /> : <Navigate to="/register" />}
+          element={
+            user.loggedIn ? <Home user={user} /> : <Navigate to="/register" />
+          }
         />
         <Route
           path="/signin"

@@ -24,7 +24,7 @@ function YearCalendar(props) {
     <div className="calendar-container">
       <div className="calendar">
         {days.map((day) => {
-          return <Day date={day} key={day} />;
+          return <Day setViewType={props.setViewType} date={day} key={day} />;
         })}
       </div>
     </div>

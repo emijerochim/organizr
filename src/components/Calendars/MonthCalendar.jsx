@@ -47,7 +47,7 @@ function MonthCalendar(props) {
       </div>
       <div className="calendar">
         {days.map((day, i) => {
-          return <Day date={day} key={i} />;
+          return <Day setViewType={props.setViewType} date={day} key={i} />;
         })}
       </div>
     </div>
