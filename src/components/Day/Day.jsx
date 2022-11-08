@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import Transaction from "../Transaction/Transaction";
+import filterTransactions from "../../util/filterTransactions";
+import DayEdit from "./DayEdit";
 import "./Day.scss";
 
-const Day = (props) => {
-  const [transactions, setTransactions] = useState([]);
+const Day = ({ date, transactions, setTransactions }) => {
+  let [editMode, setEditMode] = useState(false);
+  const dayTransactions = filterTransactions(transactions, "day");
 
-  const handleDayClick = () => {
-    props.setViewType("day");
-  };
-
-  return (
-    <div className="calendar-day" onClick={handleDayClick}>
+  return editMode ? (
+    <DayEdit editMode={editMode} setEditMode={setEditMode} />
+  ) : (
+    <div className="calendar-day" onClick={(editMode = true)}>
       <div className="day-header">
-        <p className="day-date">{props.date}</p>
+        <p className="day-date">{date}</p>
         <p className="day-balance">450</p>
       </div>
       <div className="transactions-container">
-        {transactions.map((transaction) => {
+        {dayTransactions.map((transaction) => {
           return (
             <Transaction
-              setViewType={props.setViewType}
               setTransactions={setTransactions}
               key={transaction._id}
             />

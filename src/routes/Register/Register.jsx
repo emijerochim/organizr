@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Register.scss";
 
-function Register(props) {
+function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,7 +69,7 @@ function Register(props) {
         </div>
 
         <div>
-          <Link to="/signin">Sign In</Link>
+          <Link to="/sign-in">Sign In</Link>
         </div>
       </div>
     </main>

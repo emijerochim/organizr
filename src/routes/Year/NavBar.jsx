@@ -1,13 +1,19 @@
 import React from "react";
-import DateChange from "./DateChange/DateChange";
-import ViewTypeChange from "./ViewTypeChange/ViewTypeChange";
+import YearChange from "./YearChange";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import LogoutIcon from "@mui/icons-material/Logout";
 import "./NavBar.scss";
 
-function NavBar(props) {
+function NavBar({
+  user,
+  setUser,
+  viewDate,
+  setViewDate,
+  selected,
+  setSelected,
+}) {
   const handleLogoutClick = () => {
-    console.log("logout clicked");
+    setUser({ ...user, loggedIn: false });
   };
 
   return (
@@ -16,16 +22,21 @@ function NavBar(props) {
         <EventNoteIcon fontSize="large" />
       </div>
       <div className="user-data-container">
-        <p>Emi</p>
+        <p>{user.username}</p>
         <p>$450</p>
       </div>
       <div className="stats-container"></div>
-      <DateChange
-        setViewDate={props.setViewDate}
-        viewDate={props.viewDate}
-        viewType={props.viewType}
-      />
-      <ViewTypeChange setViewType={props.setViewType} />
+      <YearChange setViewDate={setViewDate} viewDate={viewDate} />
+      <div className="month-change-buttons">
+        <button
+          className="nextMonth-button"
+          onClick={() => setSelected(selected.add(1, "months"))}
+        ></button>
+        <button
+          className="nextMonth-button"
+          onClick={() => setSelected(selected.subtract(1, "months"))}
+        ></button>
+      </div>
       <button className="logout-container" onClick={handleLogoutClick}>
         <LogoutIcon fontSize="large" />
       </button>

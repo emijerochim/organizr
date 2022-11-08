@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./SignIn.scss";
 
-function SignIn(props) {
+function SignIn({ setUser, setTransactions, setCategories }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,21 +25,21 @@ function SignIn(props) {
       .then((res) => res.json())
       .then((user) => {
         if (user._id) {
-          props.setUser({
+          setUser({
             loggedIn: true,
             id: user.id,
             username: user.username,
             email: user.email,
-            transactions: user.transactions,
-            categories: user.categories,
           });
+          setTransactions(user.transactions);
+          setCategories(user.categories);
         }
       });
   };
 
   return (
     <main>
-      <div className="signin-container">
+      <div className="sign-in-container">
         <fieldset id="sign_up">
           <legend>Sign In</legend>
           <div>

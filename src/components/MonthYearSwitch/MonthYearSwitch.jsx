@@ -1,12 +1,13 @@
 import React from "react";
-import "./ViewTypeChange.scss";
+import { Navigate } from "react-router-dom";
+import "./MonthYearSwitch.scss";
 
-function ViewTypeChange(props) {
+function MonthYearSwitch({ setViewType }) {
   const handleMonthViewClick = () => {
-    props.setViewType("month");
+    <Navigate to="/month" />;
   };
   const handleYearViewClick = () => {
-    props.setViewType("year");
+    <Navigate to="/year" />;
   };
 
   return (
@@ -21,4 +22,4 @@ function ViewTypeChange(props) {
   );
 }
 
-export default ViewTypeChange;
+export default MonthYearSwitch;
