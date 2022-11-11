@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import Day from "../../components/Day/Day";
 import NavBar from "./NavBar";
 import getCalendarDays from "../../util/getCalendarDays";
-import filterTransactions from "../../util/filterTransactions";
 import "./MonthView.scss";
 
-function MonthView({ viewDate, transactions, setTransactions }) {
-  const monthTransactions = filterTransactions(transactions, "month");
+function MonthView({ user, setUser, viewDate, setViewDate }) {
   let [days, setDays] = useState([]);
 
   useEffect(() => {
@@ -15,7 +13,12 @@ function MonthView({ viewDate, transactions, setTransactions }) {
 
   return (
     <main>
-      <NavBar />
+      <NavBar
+        user={user}
+        setUser={setUser}
+        viewDate={viewDate}
+        setViewDate={setViewDate}
+      />
       <div className="calendar-container">
         <div className="weekday-list">
           <div className="weekday-item">
@@ -42,14 +45,7 @@ function MonthView({ viewDate, transactions, setTransactions }) {
         </div>
         <div className="calendar">
           {days.map((day) => {
-            return (
-              <Day
-                date={day}
-                transactions={monthTransactions}
-                setTransactions={setTransactions}
-                key={day}
-              />
-            );
+            return <Day date={day} user={user} setUser={setUser} key={day} />;
           })}
         </div>
       </div>

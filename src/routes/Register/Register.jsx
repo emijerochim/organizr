@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./Register.scss";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [registered, setRegistered] = useState(false);
 
   const onUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -26,10 +27,18 @@ function Register() {
         email: email,
         password: password,
       }),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.username) {
+          setRegistered(true);
+        }
+      });
   };
 
-  return (
+  return registered ? (
+    <Navigate to="/sign-in" />
+  ) : (
     <main>
       <div className="register-container">
         <fieldset id="sign_up">

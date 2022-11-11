@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import CategoryEdit from "./CategoryEdit";
 import "./Category.scss";
 
-function Category({ name, color, type }) {
-  return (
+function Category({ category, user, setUser }) {
+  let [editMode, setEditMode] = useState(false);
+
+  return editMode ? (
+    <CategoryEdit
+      category={category}
+      user={user}
+      setUser={setUser}
+      setEditMode={setEditMode}
+    />
+  ) : (
     <div>
       <div className="color-container">
-        <p>{color}</p>
+        <p>{category.color}</p>
       </div>
       <div className="category-name">
-        <h2>{name}</h2>
+        <h2>{category.name}</h2>
       </div>
       <div className="category-type">
-        <p>{type}</p>
+        <p>{category.type}</p>
       </div>
     </div>
   );

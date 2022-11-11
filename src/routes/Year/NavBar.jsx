@@ -13,7 +13,8 @@ function NavBar({
   setSelected,
 }) {
   const handleLogoutClick = () => {
-    setUser({ ...user, loggedIn: false });
+    setUser({});
+    localStorage.removeItem("token");
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./SignIn.scss";
 
-function SignIn({ setUser, setTransactions, setCategories }) {
+function SignIn({ user, setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +14,7 @@ function SignIn({ setUser, setTransactions, setCategories }) {
   };
 
   const onSubmitSignIn = () => {
-    fetch("http://localhost:3001/signin", {
+    fetch("http://localhost:3001/sign-in", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -23,17 +23,12 @@ function SignIn({ setUser, setTransactions, setCategories }) {
       }),
     })
       .then((res) => res.json())
-      .then((user) => {
-        if (user._id) {
-          setUser({
-            loggedIn: true,
-            id: user.id,
-            username: user.username,
-            email: user.email,
-          });
-          setTransactions(user.transactions);
-          setCategories(user.categories);
+      .then((data) => {
+        if (data.token) {
+          data.user.loggedIn = true;
+          setUser(data.user);
         }
+        localStorage.setItem("token", data.token);
       });
   };
 

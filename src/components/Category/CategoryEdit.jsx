@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./CategoriesEdit.scss";
+import "./CategoryEdit.scss";
 
-function CategoriesEdit(category, setCategory) {
+function CategoryEdit({ category, user, setUser, setEditMode }) {
   const [name, setName] = useState({ name: category.name });
   const [color, setColor] = useState({ color: category.color });
   const [type, setType] = useState({ type: category.type });
@@ -15,14 +15,49 @@ function CategoriesEdit(category, setCategory) {
   const onTypeChange = (event) => {
     setType(event.target.value);
   };
+  const onExit = () => {
+    setEditMode(false);
+  };
 
   const handleSubmit = () => {
-    setCategory({ name: name, color: color, type: type });
+    setUser({
+      ...user,
+      categories: user.categories.map((cat) => {
+        if (cat._id === category._id) {
+          return {
+            ...category,
+            name,
+            color,
+            type,
+          };
+        } else {
+          return category;
+        }
+      }),
+    });
+
+    fetch(`http://localhost:3001/categories/${user.username}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        categories: user.categories,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+
+    setEditMode(false);
   };
 
   return (
     <div>
       <h1>Edit Category</h1>
+      <button onClick={onExit}>X</button>
       <form>
         <label htmlFor="name">Name</label>
         <input type="text" name="name" value={name} onChange={onNameChange} />
@@ -41,4 +76,4 @@ function CategoriesEdit(category, setCategory) {
   );
 }
 
-export default CategoriesEdit;
+export default CategoryEdit;

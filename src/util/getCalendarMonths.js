@@ -5,7 +5,7 @@ const getCalendarMonths = (date) => {
   let months = [];
 
   for (let i = 0; i < 12; i++) {
-    months.push(firstMonth.format("DD-MM"));
+    months.push(firstMonth);
     firstMonth.add(1, "months");
   }
 

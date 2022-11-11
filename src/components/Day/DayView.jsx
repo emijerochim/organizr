@@ -1,11 +1,14 @@
 import React from "react";
-import Transaction from "./Transaction";
+import Transaction from "../Transaction/Transaction";
 import moment from "moment/moment";
 import filterTransactions from "../../util/filterTransactions";
 import "./DayView.scss";
 
-function DayView({ transactions, setTransactions, viewDate, setViewDate }) {
-  const dayTransactions = filterTransactions(transactions, "day");
+function DayView({ user, setUser, viewDate, setViewDate }) {
+  let dayTransactions = [];
+  if (user.transactions) {
+    dayTransactions = filterTransactions(user.transactions, "day", viewDate);
+  }
 
   return (
     <div className="day-view-container">
@@ -29,7 +32,8 @@ function DayView({ transactions, setTransactions, viewDate, setViewDate }) {
           return (
             <Transaction
               transaction={transaction}
-              setTransactions={setTransactions}
+              user={user}
+              setUser={setUser}
               key={transaction._id}
             />
           );
@@ -39,4 +43,4 @@ function DayView({ transactions, setTransactions, viewDate, setViewDate }) {
   );
 }
 
-module.exports = DayView;
+export default DayView;

@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import Month from "../Month/Month";
 import NavBar from "./NavBar";
 import getCalendarMonths from "../../util/getCalendarMonths";
-import filterTransactions from "../../util/filterTransactions";
 import "./YearView.scss";
 
-function YearView({ viewDate, setViewType, transactions, setTransactions }) {
-  const yearTransactions = filterTransactions(transactions, "year");
+function YearView({ user, setUser, viewDate, setViewType }) {
   let [months, setMonths] = useState([]);
 
   useEffect(() => {
@@ -21,8 +19,8 @@ function YearView({ viewDate, setViewType, transactions, setTransactions }) {
           {months.map((month) => {
             return (
               <Month
-                transactions={yearTransactions}
-                setTransactions={setTransactions}
+                user={user}
+                setUser={setUser}
                 setViewType={setViewType}
                 date={month}
                 key={month}

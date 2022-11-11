@@ -1,17 +1,11 @@
 import React from "react";
 import MonthChange from "./MonthChange";
+import calculateBalance from "../../util/calculateBalance";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import LogoutIcon from "@mui/icons-material/Logout";
 import "./NavBar.scss";
 
-function NavBar({
-  user,
-  setUser,
-  viewDate,
-  setViewDate,
-  selected,
-  setSelected,
-}) {
+function NavBar({ user, setUser, viewDate, setViewDate }) {
   const handleLogoutClick = () => {
     setUser({ ...user, loggedIn: false });
   };
@@ -30,11 +24,11 @@ function NavBar({
       <div className="month-change-buttons">
         <button
           className="nextMonth-button"
-          onClick={() => setSelected(selected.add(1, "months"))}
+          onClick={() => setViewDate(viewDate.add(1, "months"))}
         ></button>
         <button
           className="nextMonth-button"
-          onClick={() => setSelected(selected.subtract(1, "months"))}
+          onClick={() => setViewDate(viewDate.subtract(1, "months"))}
         ></button>
       </div>
       <button className="logout-container" onClick={handleLogoutClick}>

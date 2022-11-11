@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./TransactionEdit.scss";
 
-function TransactionEdit(transaction, setTransaction, editMode, setEditMode) {
+function TransactionEdit({ transaction, user, setUser, setEditMode }) {
   const [date, setDate] = useState({ date: transaction.date });
   const [amount, setAmount] = useState({ amount: transaction.amount });
   const [description, setDescription] = useState({
@@ -21,19 +21,49 @@ function TransactionEdit(transaction, setTransaction, editMode, setEditMode) {
   const onCategoryChange = (event) => {
     setCategory(event.target.value);
   };
+  const onExit = () => {
+    setEditMode(false);
+  };
 
   const handleSubmit = () => {
-    setTransaction({
-      date: date,
-      amount: amount,
-      description: description,
-      category: category,
+    setUser({
+      ...user,
+      transactions: user.transactions.map((tx) => {
+        if (tx._id === transaction._id) {
+          return {
+            ...transaction,
+            date,
+            amount,
+            description,
+            category,
+          };
+        } else {
+          return transaction;
+        }
+      }),
     });
+    fetch(`http://localhost:3001/transactions/${user.username}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        transactions: user.transactions,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+
+    setEditMode(false);
   };
 
   return (
     <div>
       <h1>Edit Transaction</h1>
+      <button onClick={onExit}>X</button>
       <form>
         <label htmlFor="date">Date</label>
         <input type="text" name="date" value={date} onChange={onDateChange} />
@@ -52,12 +82,14 @@ function TransactionEdit(transaction, setTransaction, editMode, setEditMode) {
           onChange={onDescriptionChange}
         />
         <label htmlFor="category">Category</label>
-        <input
-          type="text"
-          name="category"
-          value={category}
-          onChange={onCategoryChange}
-        />
+
+        <input list="categories" onChange={onCategoryChange} />
+        <datalist id="categories">
+          {user.categories.map((category) => (
+            <option value={category.name} />
+          ))}
+        </datalist>
+
         <button onClick={handleSubmit}>Submit</button>
       </form>
     </div>

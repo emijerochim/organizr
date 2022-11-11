@@ -2,13 +2,20 @@ import React from "react";
 import Category from "./Category";
 import "./CategoryView.scss";
 
-function CategoryView({ categories, setCategories }) {
+function CategoryView({ user, setUser }) {
   return (
     <div className="category-view-container">
       <h2>Categories</h2>
       <div className="categories-container">
-        {categories.map((category) => {
-          return <Category category={category} key={category._id} />;
+        {user.categories.map((category) => {
+          return (
+            <Category
+              category={category}
+              user={user}
+              setUser={setUser}
+              key={category._id}
+            />
+          );
         })}
       </div>
     </div>
