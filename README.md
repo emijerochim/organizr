@@ -27,11 +27,10 @@ _________________________
  "password": String,
 
  "transactions": [{
-  "date": ISODate,
   "amount": Number,
-  "label": String,
-  "category": String,
-  "repeatable": Boolean
+  "date": ISODate,
+  "description": String,
+  "category": [Category.categorySchema]
  }],
 
  "categories": [{
@@ -46,12 +45,12 @@ _________________________
 * Railway
 ________________
 
+### Demo:
+* [emijerochim.com/organizr](http://emijerochim.com/organizr)
+
 ### Frontend code:
 * [github.com/emijerochim/organizr](http://github.com/emijerochim/organizr)
 
 ### Backend code:
 * [github.com/emijerochim/organizr-api](http://github.com/emijerochim/organizr-api)
-
-### Demo:
-* [emijerochim.com/organizr](http://github.com/emijerochim/organizr-api)
 
