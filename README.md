@@ -11,13 +11,13 @@ _________________________
 * Node.js, Express, Mongoose
 
 ### 💾 Database
-* MongoDB Atlas
+* MongoDB
 
 ### 🧰 Tools
 * Git, VS Code, Nodemon, Trello
 
 ### 📚 Libraries
-* Moment.js, Chart.js
+* JWT, Moment.js, Chart.js
 
 ### 📂 Database
 ```
@@ -41,6 +41,9 @@ _________________________
  }]
 }
 ```
+
+### ☁️ Deploy
+* Railway
 ________________
 
 ### Frontend code:
