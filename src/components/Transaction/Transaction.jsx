@@ -4,6 +4,7 @@ import "./Transaction.scss";
 
 function Transaction({ transaction, user, setUser }) {
   let [editMode, setEditMode] = useState(false);
+
   return editMode ? (
     <TransactionEdit
       transaction={transaction}
@@ -13,14 +14,13 @@ function Transaction({ transaction, user, setUser }) {
     />
   ) : (
     <div
-      className="transaction-container"
+      className="transaction"
       onClick={() => {
         editMode = true;
       }}
     >
-      <p className="transaction-amount">{transaction.amount}</p>
-      <p className="transaction-description">{transaction.description}</p>
-      <p className="transaction-category">{transaction.category}</p>
+      <div className="transaction-amount">{transaction.amount}</div>
+      <div className="transaction-description">{transaction.description}</div>
     </div>
   );
 }

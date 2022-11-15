@@ -37,7 +37,7 @@ function Register() {
   };
 
   return registered ? (
-    <Navigate to="/sign-in" />
+    <Navigate to="/login" />
   ) : (
     <main>
       <div className="register-container">
@@ -76,9 +76,8 @@ function Register() {
         <div>
           <input onClick={onSubmitRegister} type="submit" value="Register" />
         </div>
-
         <div>
-          <Link to="/sign-in">Sign In</Link>
+          <Link to="/login">Log In</Link>
         </div>
       </div>
     </main>

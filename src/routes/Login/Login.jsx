@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./SignIn.scss";
+import "./Login.scss";
 
-function SignIn({ user, setUser }) {
+function Login({ user, setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,8 +13,8 @@ function SignIn({ user, setUser }) {
     setPassword(event.target.value);
   };
 
-  const onSubmitSignIn = () => {
-    fetch("http://localhost:3001/sign-in", {
+  const onSubmitLogin = () => {
+    fetch("http://localhost:3001/login", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -36,7 +36,7 @@ function SignIn({ user, setUser }) {
     <main>
       <div className="sign-in-container">
         <fieldset id="sign_up">
-          <legend>Sign In</legend>
+          <legend>Log In</legend>
           <div>
             <label htmlFor="email-address">Username</label>
             <input
@@ -57,7 +57,7 @@ function SignIn({ user, setUser }) {
           </div>
         </fieldset>
         <div>
-          <input onClick={onSubmitSignIn} type="submit" value="Sign in" />
+          <input onClick={onSubmitLogin} type="submit" value="Enter" />
         </div>
         <div>
           <Link to="/register">Register</Link>
@@ -67,4 +67,4 @@ function SignIn({ user, setUser }) {
   );
 }
 
-export default SignIn;
+export default Login;

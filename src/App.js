@@ -1,35 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import moment from "moment/moment";
-import SignIn from "./routes/SignIn/SignIn";
+import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
 import MonthView from "./routes/Month/MonthView";
-import YearView from "./routes/Year/YearView";
+import checkLoginToken from "./util/checkLoginToken";
 import "./App.scss";
 
 function App() {
   const [user, setUser] = useState({});
   const [viewDate, setViewDate] = useState(moment());
+  const [viewType, setViewType] = useState("month");
 
   useEffect(() => {
-    const localToken = localStorage.getItem("token");
-    if (localToken) {
-      fetch("http://localhost:3001/verify-token", {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: localToken,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.user) {
-            setUser(data.user);
-            setUser({ ...data.user, loggedIn: true });
-          }
-        });
-    }
-  }, [user.loggedIn]);
+    checkLoginToken(setUser);
+  }, []);
 
   return (
     <main>
@@ -38,19 +23,9 @@ function App() {
           path="/"
           element={
             user.loggedIn ? (
-              <Navigate to="/month" />
+              <Navigate to="/calendar" />
             ) : (
-              <Navigate to="/sign-in" />
-            )
-          }
-        />
-        <Route
-          path="/sign-in"
-          element={
-            user.loggedIn ? (
-              <Navigate to="/" />
-            ) : (
-              <SignIn user={user} setUser={setUser} />
+              <Navigate to="/login" />
             )
           }
         />
@@ -59,22 +34,17 @@ function App() {
           element={user.loggedIn ? <Navigate to="/" /> : <Register />}
         />
         <Route
-          path="/year"
+          path="/login"
           element={
             user.loggedIn ? (
-              <YearView
-                user={user}
-                setUser={setUser}
-                viewDate={viewDate}
-                setViewDate={setViewDate}
-              />
+              <Navigate to="/" />
             ) : (
-              <Navigate to="/sign-in" />
+              <Login user={user} setUser={setUser} />
             )
           }
         />
         <Route
-          path="/month"
+          path="/calendar"
           element={
             user.loggedIn ? (
               <MonthView
@@ -82,9 +52,11 @@ function App() {
                 setUser={setUser}
                 viewDate={viewDate}
                 setViewDate={setViewDate}
+                viewType={viewType}
+                setViewType={setViewType}
               />
             ) : (
-              <Navigate to="/sign-in" />
+              <Navigate to="/login" />
             )
           }
         />
