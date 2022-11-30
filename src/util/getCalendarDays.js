@@ -7,10 +7,9 @@ const getCalendarDays = (date) => {
   let days = [];
 
   for (let i = 0; i < daysInCalendar; i++) {
-    days.push(firstDay.format("DD-MM"));
-    firstDay.add(1, "days");
+    days.push(firstDay);
+    firstDay = moment(firstDay).add(1, "days");
   }
-
   return days;
 };
 

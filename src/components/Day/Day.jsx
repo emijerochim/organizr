@@ -1,52 +1,71 @@
 import React, { useState, useEffect } from "react";
 import Transaction from "../Transaction/Transaction";
-import DayView from "./DayView";
 import filterTransactions from "../../util/filterTransactions";
+import moment from "moment/moment";
 import "./Day.scss";
 
-const Day = ({ date, user, setUser }) => {
-  let [editMode, setEditMode] = useState(false);
+function Day({
+  day,
+  user,
+  setDayToView,
+  setTriggerDayView,
+  setTriggerNewTransaction,
+  setTriggerEditTransaction,
+  setTransactionToEdit,
+}) {
   let [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     if (user.transactions) {
-      setTransactions(filterTransactions(user.transactions, "day", date));
+      setTransactions(filterTransactions(user.transactions, "day", day));
     }
-  }, [user.transactions, date]);
+  }, [user.transactions, day]);
 
-  return editMode ? (
-    <DayView
-      user={user}
-      setUser={setUser}
-      editMode={editMode}
-      setEditMode={setEditMode}
-    />
-  ) : (
-    <div
-      className="calendar-day"
-      onClick={() => {
-        editMode = true;
-      }}
-    >
+  const openDayView = () => {
+    setTriggerDayView(true);
+    setDayToView(moment(day));
+  };
+  const openNewTransaction = () => {
+    setDayToView(moment(day));
+    setTriggerNewTransaction(true);
+  };
+
+  return (
+    <div className="calendar-day">
       <div className="day-header">
-        <p className="day-date">{date}</p>
-        <p className="day-balance">450</p>
+        <div className="day-header-clickable" onClick={openDayView}>
+          <div className="day-date-container">
+            <p className="day-date">{day.format("DD-MM")}</p>
+          </div>
+          <div className="day-balance-container">
+            <p className="day-balance">450</p>
+          </div>
+        </div>
+        <div className="add-transaction-button-container">
+          <button
+            className="add-transaction-button"
+            onClick={openNewTransaction}
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <div className="transactions-container">
-        {transactions.map((transaction) => {
+        {transactions.map((transaction, txIndex) => {
           return (
             <Transaction
               transaction={transaction}
-              user={user}
-              setUser={setUser}
-              key={transaction}
+              setTriggerEditTransaction={setTriggerEditTransaction}
+              setTransactionToEdit={setTransactionToEdit}
+              setDayToView={setDayToView}
+              key={txIndex}
             />
           );
         })}
       </div>
     </div>
   );
-};
+}
 
 export default Day;

@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .navbar {
   height: 80px;
   width: 98vw;
@@ -10,7 +12,7 @@
   .logo-container {
     height: 100%;
     width: 8%;
-    background-color: lightskyblue;
+    background-color: $buttons-color;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,12 +35,11 @@
     }
   }
 
-  .date-change-container{
+  .date-change-container {
     display: flex;
     width: 15%;
     justify-content: space-around;
   }
-
 
   .logout-container {
     margin-right: 2%;

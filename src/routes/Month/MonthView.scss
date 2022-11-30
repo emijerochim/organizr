@@ -15,10 +15,10 @@
 
     .weekday-item {
       width: $day-width;
+      margin-left: $day-margin;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 2%;
 
       p {
         font-size: 1rem;

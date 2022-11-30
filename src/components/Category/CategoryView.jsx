@@ -7,13 +7,13 @@ function CategoryView({ user, setUser }) {
     <div className="category-view-container">
       <h2>Categories</h2>
       <div className="categories-container">
-        {user.categories.map((category) => {
+        {user.categories.map((category, index) => {
           return (
             <Category
               category={category}
               user={user}
               setUser={setUser}
-              key={category._id}
+              key={index}
             />
           );
         })}

@@ -25,8 +25,8 @@ function Login({ user, setUser }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          data.user.loggedIn = true;
           setUser(data.user);
+          data.user.loggedIn = true;
         }
         localStorage.setItem("token", data.token);
       });

@@ -1,22 +1,20 @@
-import React, { useState } from "react";
-import TransactionEdit from "./TransactionEdit";
+import React from "react";
 import "./Transaction.scss";
+import moment from "moment/moment";
 
-function Transaction({ transaction, user, setUser }) {
-  let [editMode, setEditMode] = useState(false);
-
-  return editMode ? (
-    <TransactionEdit
-      transaction={transaction}
-      user={user}
-      setUser={setUser}
-      setEditMode={setEditMode}
-    />
-  ) : (
+function Transaction({
+  transaction,
+  setTransactionToEdit,
+  setTriggerEditTransaction,
+  setDayToView,
+}) {
+  return (
     <div
       className="transaction"
       onClick={() => {
-        editMode = true;
+        setTriggerEditTransaction(true);
+        setTransactionToEdit(transaction);
+        setDayToView(moment(transaction.date));
       }}
     >
       <div className="transaction-amount">{transaction.amount}</div>

@@ -5,16 +5,23 @@ import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
 import MonthView from "./routes/Month/MonthView";
 import checkLoginToken from "./util/checkLoginToken";
+import getUser from "./util/getUser";
 import "./App.scss";
 
 function App() {
   const [user, setUser] = useState({});
-  const [viewDate, setViewDate] = useState(moment());
-  const [viewType, setViewType] = useState("month");
+  const [dayToView, setDayToView] = useState(moment());
 
   useEffect(() => {
     checkLoginToken(setUser);
-  }, []);
+    if (user.username) {
+      getUser(user.username).then((data) => {
+        setUser((prevState) => {
+          return { ...prevState, transactions: data[0].transactions };
+        });
+      });
+    }
+  }, [user.username, setUser]); //user.transactions
 
   return (
     <main>
@@ -50,10 +57,8 @@ function App() {
               <MonthView
                 user={user}
                 setUser={setUser}
-                viewDate={viewDate}
-                setViewDate={setViewDate}
-                viewType={viewType}
-                setViewType={setViewType}
+                dayToView={dayToView}
+                setDayToView={setDayToView}
               />
             ) : (
               <Navigate to="/login" />

@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from "react";
-import Day from "../../components/Day/Day";
-import NavBar from "./NavBar";
 import getCalendarDays from "../../util/getCalendarDays";
+import Day from "../../components/Day/Day";
+import DayView from "../../components/Day/DayView";
+import EditTransaction from "../../components/Transaction/EditTransaction";
+import NewTransaction from "../../components/Transaction/NewTransaction";
+import NavBar from "./NavBar";
 import "./MonthView.scss";
 
-function MonthView({ user, setUser, viewDate, setViewDate }) {
+function MonthView({ user, setUser, dayToView, setDayToView }) {
   let [days, setDays] = useState([]);
+  let [triggerDayView, setTriggerDayView] = useState(false);
+  let [triggerNewTransaction, setTriggerNewTransaction] = useState(false);
+  let [triggerEditTransaction, setTriggerEditTransaction] = useState(false);
+  let [transactionToEdit, setTransactionToEdit] = useState(null);
 
   useEffect(() => {
-    setDays(getCalendarDays(viewDate));
-  }, [viewDate]);
+    setDays(getCalendarDays(dayToView));
+  }, [dayToView, setUser, user.transactions, user.username]);
 
   return (
     <main>
-      <NavBar
-        user={user}
-        setUser={setUser}
-        viewDate={viewDate}
-        setViewDate={setViewDate}
-      />
+      {
+        <NavBar
+          user={user}
+          setUser={setUser}
+          dayToView={dayToView}
+          setDayToView={setDayToView}
+        />
+      }
       <div className="calendar-container">
         <div className="weekday-list">
           <div className="weekday-item">
@@ -45,10 +54,53 @@ function MonthView({ user, setUser, viewDate, setViewDate }) {
         </div>
         <div className="calendar">
           {days.map((day) => {
-            return <Day date={day} user={user} setUser={setUser} key={day} />;
+            return (
+              <Day
+                day={day}
+                user={user}
+                dayToView={dayToView}
+                setDayToView={setDayToView}
+                setTriggerDayView={setTriggerDayView}
+                setTriggerEditTransaction={setTriggerEditTransaction}
+                setTransactionToEdit={setTransactionToEdit}
+                setTriggerNewTransaction={setTriggerNewTransaction}
+                key={day}
+              />
+            );
           })}
         </div>
       </div>
+      <DayView
+        user={user}
+        setUser={setUser}
+        triggerDayView={triggerDayView}
+        setTriggerDayView={setTriggerDayView}
+        dayToView={dayToView}
+        setDayToView={setDayToView}
+        setTriggerEditTransaction={setTriggerEditTransaction}
+        transactionToEdit={transactionToEdit}
+        setTransactionToEdit={setTransactionToEdit}
+        setTriggerNewTransaction={setTriggerNewTransaction}
+      />
+      {triggerEditTransaction ? (
+        <EditTransaction
+          user={user}
+          transaction={transactionToEdit}
+          dayToView={dayToView}
+          triggerEditTransaction={triggerEditTransaction}
+          setTransactionToEdit={setTransactionToEdit}
+          setTriggerEditTransaction={setTriggerEditTransaction}
+        />
+      ) : null}
+      {triggerNewTransaction ? (
+        <NewTransaction
+          user={user}
+          dayToView={dayToView}
+          setDayToView={setDayToView}
+          triggerNewTransaction={triggerNewTransaction}
+          setTriggerNewTransaction={setTriggerNewTransaction}
+        />
+      ) : null}
     </main>
   );
 }
