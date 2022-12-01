@@ -69,13 +69,13 @@ function DayView({
         </div>
       </div>
       <div className="transactions-container">
-        {dayTransactions.map((transaction) => {
+        {dayTransactions.map((transaction, index) => {
           return (
             <Transaction
               transaction={transaction}
               setTriggerEditTransaction={setTriggerEditTransaction}
               setTransactionToEdit={setTransactionToEdit}
-              key={transaction}
+              key={index}
             />
           );
         })}

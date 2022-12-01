@@ -85,6 +85,7 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
       {triggerEditTransaction ? (
         <EditTransaction
           user={user}
+          setUser={setUser}
           transaction={transactionToEdit}
           dayToView={dayToView}
           triggerEditTransaction={triggerEditTransaction}
@@ -95,6 +96,7 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
       {triggerNewTransaction ? (
         <NewTransaction
           user={user}
+          setUser={setUser}
           dayToView={dayToView}
           setDayToView={setDayToView}
           triggerNewTransaction={triggerNewTransaction}

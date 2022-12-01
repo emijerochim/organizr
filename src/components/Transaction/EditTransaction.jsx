@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./EditTransaction.scss";
 
 function EditTransaction({
   user,
+  setUser,
   transaction,
   dayToView,
   triggerEditTransaction,
   setTriggerEditTransaction,
   setTransactionToEdit,
 }) {
-  const id = transaction.id;
   const [amount, setAmount] = useState(transaction.amount);
   const [description, setDescription] = useState(transaction.description);
   const [category, setCategory] = useState(transaction.category);
@@ -20,8 +20,15 @@ function EditTransaction({
   const onDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
+  const categoryInput = useRef(null);
   const onCategoryChange = (event) => {
-    setCategory(event.target.value);
+    categoryInput.current.placeholder = event.target.value;
+    setCategory(
+      user.categories.find(
+        (category) => category.description === event.target.value
+      )
+    );
+    categoryInput.current.value = "";
   };
   const onExit = () => {
     setTriggerEditTransaction(false);
@@ -29,14 +36,9 @@ function EditTransaction({
   };
 
   const handleSubmit = () => {
-    const newTransaction = {
-      token: user.token,
-      date: dayToView.format(),
-      id,
-      amount,
-      description,
-      category,
-    };
+    transaction.amount = amount;
+    transaction.description = description;
+    transaction.category = category;
 
     fetch(`http://localhost:3001/transactions/${user.username}`, {
       method: "put",
@@ -44,17 +46,27 @@ function EditTransaction({
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
-      body: JSON.stringify(newTransaction),
-    }).then((res) => res.json());
+      body: JSON.stringify(transaction),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          const newTx = data.data[0];
+          const newTransactions = user.transactions.map((tx) => {
+            if (tx.id === newTx.id) {
+              return newTx;
+            } else {
+              return tx;
+            }
+          });
+          setUser({ ...user, transactions: newTransactions });
+        }
+      });
 
     setTriggerEditTransaction(false);
   };
-
-  useEffect(() => {
-    setAmount(transaction.amount);
-    setDescription(transaction.description);
-    setCategory(transaction.category.name);
-  }, [transaction]);
 
   return triggerEditTransaction ? (
     <div>
@@ -64,23 +76,31 @@ function EditTransaction({
         <label htmlFor="amount">Amount</label>
         <input
           type="text"
-          name="amount"
+          description="amount"
           value={amount}
           onChange={onAmountChange}
         />
+
         <label htmlFor="description">Description</label>
         <input
           type="text"
-          name="description"
+          description="Description"
           value={description}
           onChange={onDescriptionChange}
         />
-        <label htmlFor="category">Category</label>
 
-        <input list="categories" onChange={onCategoryChange} value={category} />
+        <label htmlFor="category">Category</label>
+        <input
+          id="category-input"
+          ref={categoryInput}
+          description="Category"
+          list="categories"
+          onChange={onCategoryChange}
+          placeholder={category.description}
+        />
         <datalist id="categories">
-          {user.categories.map((category) => (
-            <option value={category.name} key={category.name} />
+          {user.categories.map((c, index) => (
+            <option value={c.description} key={index} />
           ))}
         </datalist>
 

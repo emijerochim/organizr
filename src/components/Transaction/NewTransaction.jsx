@@ -4,6 +4,7 @@ import "./NewTransaction.scss";
 
 function NewTransaction({
   user,
+  setUser,
   dayToView,
   setTriggerNewTransaction,
   triggerNewTransaction,

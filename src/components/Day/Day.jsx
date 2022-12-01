@@ -19,7 +19,7 @@ function Day({
     if (user.transactions) {
       setTransactions(filterTransactions(user.transactions, "day", day));
     }
-  }, [user.transactions, day]);
+  }, [day, user.transactions]);
 
   const openDayView = () => {
     setTriggerDayView(true);
