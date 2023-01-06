@@ -17,7 +17,11 @@ function App() {
     if (user.username) {
       getUser(user.username).then((data) => {
         setUser((prevState) => {
-          return { ...prevState, transactions: data[0].transactions };
+          return {
+            ...prevState,
+            transactions: data[0].transactions,
+            categories: data[0].categories,
+          };
         });
       });
     }

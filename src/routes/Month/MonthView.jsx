@@ -4,6 +4,8 @@ import Day from "../../components/Day/Day";
 import DayView from "../../components/Day/DayView";
 import EditTransaction from "../../components/Transaction/EditTransaction";
 import NewTransaction from "../../components/Transaction/NewTransaction";
+import CategoryView from "../../components/Category/CategoryView";
+import NewCategory from "../../components/Category/NewCategory";
 import NavBar from "./NavBar";
 import "./MonthView.scss";
 
@@ -13,6 +15,8 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
   let [triggerNewTransaction, setTriggerNewTransaction] = useState(false);
   let [triggerEditTransaction, setTriggerEditTransaction] = useState(false);
   let [transactionToEdit, setTransactionToEdit] = useState(null);
+  let [triggerCategoryView, setTriggerCategoryView] = useState(true);
+  let [triggerNewCategory, setTriggerNewCategory] = useState(false);
 
   useEffect(() => {
     setDays(getCalendarDays(dayToView));
@@ -26,6 +30,7 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
           setUser={setUser}
           dayToView={dayToView}
           setDayToView={setDayToView}
+          setTriggerCategoryView={setTriggerCategoryView}
         />
       }
       <div className="calendar-container">
@@ -58,6 +63,7 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
               <Day
                 day={day}
                 user={user}
+                setUser={setUser}
                 dayToView={dayToView}
                 setDayToView={setDayToView}
                 setTriggerDayView={setTriggerDayView}
@@ -87,7 +93,6 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
           user={user}
           setUser={setUser}
           transaction={transactionToEdit}
-          dayToView={dayToView}
           triggerEditTransaction={triggerEditTransaction}
           setTransactionToEdit={setTransactionToEdit}
           setTriggerEditTransaction={setTriggerEditTransaction}
@@ -98,9 +103,25 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
           user={user}
           setUser={setUser}
           dayToView={dayToView}
-          setDayToView={setDayToView}
           triggerNewTransaction={triggerNewTransaction}
           setTriggerNewTransaction={setTriggerNewTransaction}
+        />
+      ) : null}
+      {triggerCategoryView ? (
+        <CategoryView
+          user={user}
+          setUser={setUser}
+          triggerCategoryView={triggerCategoryView}
+          setTriggerCategoryView={setTriggerCategoryView}
+          setTriggerNewCategory={setTriggerNewCategory}
+        />
+      ) : null}
+      {triggerNewCategory ? (
+        <NewCategory
+          user={user}
+          setUser={setUser}
+          triggerNewCategory={triggerNewCategory}
+          setTriggerNewCategory={setTriggerNewCategory}
         />
       ) : null}
     </main>

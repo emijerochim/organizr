@@ -6,7 +6,13 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import LogoutIcon from "@mui/icons-material/Logout";
 import "./NavBar.scss";
 
-function NavBar({ user, setUser, dayToView, setDayToView }) {
+function NavBar({
+  user,
+  setUser,
+  dayToView,
+  setDayToView,
+  setTriggerCategoryView,
+}) {
   const handleLeftArrowClick = () => {
     setDayToView(moment(dayToView).subtract(1, "months"));
   };
@@ -18,6 +24,9 @@ function NavBar({ user, setUser, dayToView, setDayToView }) {
     localStorage.removeItem("token");
     setUser({});
   };
+  const handleCategoriesClick = () => {
+    setTriggerCategoryView(true);
+  };
 
   return (
     <div className="navbar">
@@ -27,6 +36,11 @@ function NavBar({ user, setUser, dayToView, setDayToView }) {
       <div className="user-data-container">
         <p>{user.username}</p>
         <p>$450</p>
+      </div>
+      <div className="categories-button-container">
+        <button className="categories-button" onClick={handleCategoriesClick}>
+          <p>Categories</p>
+        </button>
       </div>
       <div className="stats-container"></div>
       <div className="date-change-container">

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Transaction from "../Transaction/Transaction";
-import filterTransactions from "../../util/filterTransactions";
 import moment from "moment/moment";
 import "./Day.scss";
 
 function Day({
   day,
   user,
+  setUser,
   setDayToView,
   setTriggerDayView,
   setTriggerNewTransaction,
@@ -16,9 +16,10 @@ function Day({
   let [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    if (user.transactions) {
-      setTransactions(filterTransactions(user.transactions, "day", day));
-    }
+    let txs = user.transactions.filter((transaction) =>
+      moment(transaction.date).isSame(day.format())
+    );
+    setTransactions(txs);
   }, [day, user.transactions]);
 
   const openDayView = () => {

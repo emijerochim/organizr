@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NewTransaction.scss";
 
@@ -8,10 +8,9 @@ function NewTransaction({
   dayToView,
   setTriggerNewTransaction,
   triggerNewTransaction,
-  setTransactionToEdit,
 }) {
   const id = uuidv4();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
 
@@ -21,15 +20,19 @@ function NewTransaction({
   const onDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
-  const onCategoryChange = (event) => {
-    setCategory(event.target.value);
+  const categoryInput = useRef(null);
+  const onCategoryChange = async (event) => {
+    await setCategory(
+      user.categories.find((category) => category.name === event.target.value)
+    );
+    categoryInput.current.placeholder = event.target.value;
+    categoryInput.current.value = "";
   };
   const onExit = () => {
     setTriggerNewTransaction(false);
-    setTransactionToEdit(null);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newTransaction = {
       token: user.token,
       date: dayToView.format(),
@@ -39,18 +42,35 @@ function NewTransaction({
       category,
     };
 
-    fetch(`http://localhost:3001/transactions/${user.username}`, {
+    await fetch(`http://localhost:3001/transactions/${user.username}`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify(newTransaction),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          setUser({ ...user, transactions: data.data });
+        }
+      });
 
-    user.transactions.push(newTransaction);
     setTriggerNewTransaction(false);
   };
+
+  useEffect(() => {
+    const categories = user.categories.map((c) => c.name);
+    const datalist = document.getElementById("categories");
+    categories.forEach((c) => {
+      const option = document.createElement("option");
+      option.value = c;
+      datalist.appendChild(option);
+    });
+  }, [user.categories]);
 
   return triggerNewTransaction ? (
     <div>
@@ -60,25 +80,29 @@ function NewTransaction({
         <label htmlFor="amount">Amount</label>
         <input
           type="text"
-          name="amount"
+          description="amount"
           value={amount}
           onChange={onAmountChange}
         />
+
         <label htmlFor="description">Description</label>
         <input
           type="text"
-          name="description"
+          description="description"
           value={description}
           onChange={onDescriptionChange}
         />
-        <label htmlFor="category">Category</label>
 
-        <input list="categories" onChange={onCategoryChange} value={category} />
-        <datalist id="categories">
-          {user.categories.map((category) => (
-            <option value={category.name} key={category.name} />
-          ))}
-        </datalist>
+        <label htmlFor="category">Category</label>
+        <input
+          id="category-input"
+          ref={categoryInput}
+          description="Category"
+          list="categories"
+          onChange={onCategoryChange}
+          placeholder={category}
+        />
+        <datalist id="categories"></datalist>
 
         <button type="button" onClick={handleSubmit}>
           Submit

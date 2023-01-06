@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Transaction from "../Transaction/Transaction";
-import filterTransactions from "../../util/filterTransactions";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import moment from "moment/moment";
@@ -31,14 +30,6 @@ function DayView({
   const openNewTransaction = () => {
     setTriggerNewTransaction(true);
   };
-
-  useEffect(() => {
-    if (user.transactions) {
-      setDayTransactions(
-        filterTransactions(user.transactions, "day", dayToView)
-      );
-    }
-  }, [user.transactions, dayToView]);
 
   return triggerDayView ? (
     <div className="day-view-container">
