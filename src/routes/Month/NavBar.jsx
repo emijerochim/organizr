@@ -3,6 +3,7 @@ import moment from "moment/moment";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { getBalanceByDay } from "../../util/getBalanceByDay";
 import "./NavBar.scss";
 
 function NavBar({
@@ -12,8 +13,6 @@ function NavBar({
   setDayToView,
   setTriggerCategoryView,
 }) {
-  const [dayToViewBalance, setDayToViewBalance] = useState(0);
-
   const handleLeftArrowClick = () => {
     setDayToView(moment(dayToView).subtract(1, "months"));
   };
@@ -32,11 +31,6 @@ function NavBar({
   useEffect(() => {
     let txs = user.transactions.filter((transaction) =>
       moment(transaction.date).isSame(moment().format())
-    );
-    setDayToViewBalance(
-      txs.reduce((acc, tx) => {
-        return acc + tx.amount;
-      }, 0)
     );
   }, [dayToView, user.transactions]);
 
@@ -61,7 +55,9 @@ function NavBar({
           <p className="today-date">{moment().format("DD-MM")}</p>
         </div>
         <div className="user-balance-container">
-          <p className="user-balance">${dayToViewBalance}</p>
+          <p className="user-balance">
+            ${getBalanceByDay(user.transactions, dayToView)}
+          </p>
         </div>
       </div>
       <div className="date-change-container">

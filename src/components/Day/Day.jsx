@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Transaction from "../Transaction/Transaction";
 import moment from "moment/moment";
 import "./Day.scss";
+import { getBalanceByDay } from "../../util/getBalanceByDay";
 
 function Day({
   day,
@@ -20,11 +21,7 @@ function Day({
       moment(transaction.date).isSame(day.format())
     );
     setTransactions(txs);
-    setBalance(
-      txs.reduce((acc, tx) => {
-        return acc + tx.amount;
-      }, 0)
-    );
+    setBalance(getBalanceByDay(user.transactions, day));
   }, [day, user.transactions]);
 
   const openDayView = () => {
