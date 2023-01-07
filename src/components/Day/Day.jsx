@@ -6,7 +6,6 @@ import "./Day.scss";
 function Day({
   day,
   user,
-  setUser,
   setDayToView,
   setTriggerDayView,
   setTriggerNewTransaction,
@@ -14,12 +13,18 @@ function Day({
   setTransactionToEdit,
 }) {
   let [transactions, setTransactions] = useState([]);
+  let [balance, setBalance] = useState(0);
 
   useEffect(() => {
     let txs = user.transactions.filter((transaction) =>
       moment(transaction.date).isSame(day.format())
     );
     setTransactions(txs);
+    setBalance(
+      txs.reduce((acc, tx) => {
+        return acc + tx.amount;
+      }, 0)
+    );
   }, [day, user.transactions]);
 
   const openDayView = () => {
@@ -36,10 +41,10 @@ function Day({
       <div className="day-header">
         <div className="day-header-clickable" onClick={openDayView}>
           <div className="day-date-container">
-            <p className="day-date">{day.format("DD-MM")}</p>
+            <p className="day-date">{day.format("D")}</p>
           </div>
           <div className="day-balance-container">
-            <p className="day-balance">450</p>
+            <p className="day-balance">${balance}</p>
           </div>
         </div>
         <div className="add-transaction-button-container">

@@ -6,13 +6,19 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-bottom: 2px solid grey;
 
-  .logo-container {
+  div {
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-container {
     width: 8%;
-    background-color: $buttons-color;
+    background-color: #b3e5fc;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,15 +29,25 @@
   }
 
   .user-data-container {
-    height: 100%;
     width: 10%;
     display: flex;
     flex-direction: column;
     margin-right: auto;
     justify-content: space-around;
-    p {
-      margin: 0;
-      font-size: 1rem;
+    align-items: space-around;
+    .today-date-container {
+      height: 50%;
+      .today-date {
+        color: #333;
+        font-size: 1.1rem;
+      }
+    }
+    .user-balance-container {
+      height: 50%;
+      .user-balance {
+        color: #333;
+        font-size: 1rem;
+      }
     }
   }
 
@@ -39,17 +55,63 @@
     display: flex;
     width: 15%;
     justify-content: space-around;
+    align-items: center;
+
+    .date {
+      font-size: 1.3rem;
+    }
+
+    .left-arrow,
+    .right-arrow {
+      background-color: transparent;
+      border: none;
+      color: #333;
+      font-size: 2rem;
+      cursor: pointer;
+
+      &:hover {
+        color: #666;
+      }
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin: 0 0.5rem;
+    }
+  }
+
+  .stats-container {
+    display: flex;
+    width: 17%;
+  }
+
+  .categories-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+
+    .categories-button {
+      background-color: transparent;
+      border: none;
+      color: #333;
+      font-size: 1.2rem;
+      cursor: pointer;
+
+      &:hover {
+        color: #666;
+      }
+    }
   }
 
   .logout-container {
-    margin-right: 2%;
-    margin-left: 5%;
-    border: none;
-    background: none;
-    height: 70%;
-    width: 3%;
-  }
-  .logout-container:hover {
-    cursor: pointer;
+    width: 10%;
+    .logout-button {
+      border: none;
+      background: none;
+    }
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

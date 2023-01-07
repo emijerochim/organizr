@@ -41,43 +41,59 @@ function Register() {
   ) : (
     <main>
       <div className="register-container">
-        <fieldset id="sign_up">
-          <legend>Register</legend>
-          <div>
-            <label htmlFor="name">Username</label>
+        <fieldset id="sign_up" className="register-fieldset">
+          <legend className="register-legend">Register</legend>
+          <div className="register-input-container">
+            <label htmlFor="name" className="register-label">
+              Username
+            </label>
             <input
               onChange={onUsernameChange}
               type="text"
               name="username"
               id="username"
+              className="register-input"
             />
           </div>
 
-          <div>
-            <label htmlFor="email-address">Email</label>
+          <div className="register-input-container">
+            <label htmlFor="email-address" className="register-label">
+              Email
+            </label>
             <input
               onChange={onEmailChange}
               type="email"
               name="email-address"
               id="email-address"
+              className="register-input"
             />
           </div>
 
-          <div>
-            <label htmlFor="password">Password</label>
+          <div className="register-input-container">
+            <label htmlFor="password" className="register-label">
+              Password
+            </label>
             <input
               onChange={onPasswordChange}
               type="password"
               name="password"
               id="password"
+              className="register-input"
             />
           </div>
         </fieldset>
-        <div>
-          <input onClick={onSubmitRegister} type="submit" value="Register" />
+        <div className="register-submit-container">
+          <input
+            onClick={onSubmitRegister}
+            type="submit"
+            value="Register"
+            className="register-submit-button"
+          />
         </div>
-        <div>
-          <Link to="/login">Log In</Link>
+        <div className="login-link-container">
+          <Link to="/login" className="login-link">
+            Log In
+          </Link>
         </div>
       </div>
     </main>

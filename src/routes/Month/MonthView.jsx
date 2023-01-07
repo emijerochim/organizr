@@ -15,7 +15,7 @@ function MonthView({ user, setUser, dayToView, setDayToView }) {
   let [triggerNewTransaction, setTriggerNewTransaction] = useState(false);
   let [triggerEditTransaction, setTriggerEditTransaction] = useState(false);
   let [transactionToEdit, setTransactionToEdit] = useState(null);
-  let [triggerCategoryView, setTriggerCategoryView] = useState(true);
+  let [triggerCategoryView, setTriggerCategoryView] = useState(false);
   let [triggerNewCategory, setTriggerNewCategory] = useState(false);
 
   useEffect(() => {

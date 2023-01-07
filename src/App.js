@@ -25,7 +25,7 @@ function App() {
         });
       });
     }
-  }, [user.username, setUser]); //user.transactions
+  }, [user.username, setUser]);
 
   return (
     <main>
