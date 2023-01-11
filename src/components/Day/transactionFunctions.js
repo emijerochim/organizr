@@ -1,6 +1,13 @@
 import moment from "moment";
 
-const getTransactionsDates = (transactions) => {
+const getTransactionsFromDay = (transactions, day) => {
+  return transactions.filter((transaction) =>
+    moment(transaction.date).isSame(day.format())
+  );
+};
+
+//return a hash map with the transactions and its respective dates
+const getTransactionsBalances = (transactions) => {
   //order transactions by its date, by default they are ordered by creation date
   transactions.sort((a, b) => {
     return moment(a.date).isAfter(b.date) ? 1 : -1;
@@ -21,23 +28,4 @@ const getTransactionsDates = (transactions) => {
   return balanceByDay;
 };
 
-const getBalanceByDay = (transactions, day) => {
-  const TransactionsDates = getTransactionsDates(transactions);
-  const dates = Object.keys(TransactionsDates);
-  let balance = 0;
-
-  for (const date of dates) {
-    if (
-      moment(date, "DD-MM-YYYY").isSame(day) ||
-      moment(date, "DD-MM-YYYY").isBefore(day)
-    ) {
-      balance = TransactionsDates[date];
-    } else {
-      break;
-    }
-  }
-
-  return balance;
-};
-
-export { getTransactionsDates, getBalanceByDay };
+export { getTransactionsBalances, getTransactionsFromDay };

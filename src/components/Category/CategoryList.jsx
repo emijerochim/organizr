@@ -1,18 +1,18 @@
 import React from "react";
 import Category from "./Category";
-import "./CategoryView.scss";
+import "./CategoryList.scss";
 
-function CategoryView({
+function CategoryList({
   user,
   setUser,
-  setTriggerCategoryView,
+  setTriggerCategoryList,
   setTriggerNewCategory,
 }) {
   const handleCloseButton = () => {
-    setTriggerCategoryView(false);
+    setTriggerCategoryList(false);
   };
   const handleNewCategoryButton = () => {
-    setTriggerCategoryView(false);
+    setTriggerCategoryList(false);
     setTriggerNewCategory(true);
   };
 
@@ -41,4 +41,4 @@ function CategoryView({
   );
 }
 
-export default CategoryView;
+export default CategoryList;

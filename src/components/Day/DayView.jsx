@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getTransactionsBalances } from "./transactionFunctions";
 import Transaction from "../Transaction/Transaction";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -7,7 +8,6 @@ import "./DayView.scss";
 
 function DayView({
   user,
-  setUser,
   triggerDayView,
   setTriggerDayView,
   dayToView,
@@ -17,6 +17,10 @@ function DayView({
   setTriggerNewTransaction,
 }) {
   let [dayTransactions, setDayTransactions] = useState([]);
+
+  useEffect(() => {
+    setDayTransactions(getTransactionsBalances(user.transactions, dayToView));
+  }, [dayToView, setDayToView, user.transactions]);
 
   const handlePreviousDayButton = () => {
     setDayToView(moment(dayToView).subtract(1, "days"));

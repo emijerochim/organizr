@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import moment from "moment/moment";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { getBalanceByDay } from "../../util/getBalanceByDay";
+import { getBalanceByDay } from "../../components/Day/balanceFunctions";
 import "./NavBar.scss";
 
 function NavBar({
@@ -11,7 +11,7 @@ function NavBar({
   setUser,
   dayToView,
   setDayToView,
-  setTriggerCategoryView,
+  setTriggerCategoryList,
 }) {
   const handleLeftArrowClick = () => {
     setDayToView(moment(dayToView).subtract(1, "months"));
@@ -25,14 +25,8 @@ function NavBar({
     setUser({});
   };
   const handleCategoriesClick = () => {
-    setTriggerCategoryView(true);
+    setTriggerCategoryList(true);
   };
-
-  useEffect(() => {
-    let txs = user.transactions.filter((transaction) =>
-      moment(transaction.date).isSame(moment().format())
-    );
-  }, [dayToView, user.transactions]);
 
   return (
     <div className="navbar">
@@ -56,7 +50,7 @@ function NavBar({
         </div>
         <div className="user-balance-container">
           <p className="user-balance">
-            ${getBalanceByDay(user.transactions, dayToView)}
+            ${getBalanceByDay(user.transactions, moment())}
           </p>
         </div>
       </div>

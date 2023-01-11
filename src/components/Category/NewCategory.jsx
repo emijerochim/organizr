@@ -20,7 +20,15 @@ function NewCategory({
     setColor(event.target.value);
   };
   const onTypeChange = (event) => {
-    setType(event.target.value);
+    let incomeBox = document.getElementById("income-box");
+    let expenseBox = document.getElementById("expense-box");
+    if (event.target === incomeBox) {
+      expenseBox.checked = !incomeBox.checked;
+      setType("income");
+    } else if (event.target === expenseBox) {
+      incomeBox.checked = !expenseBox.checked;
+      setType("expense");
+    }
   };
 
   const onExit = () => {
@@ -86,19 +94,11 @@ function NewCategory({
           value={color}
           onChange={onColorChange}
         />
+        <label htmlFor="income-box">Income</label>
+        <input type="checkbox" id="income-box" onChange={onTypeChange} />
 
-        <label htmlFor="type" className="label">
-          Type
-        </label>
-        <input
-          type="text"
-          id="type"
-          className="input"
-          name="type"
-          value={type}
-          onChange={onTypeChange}
-        />
-
+        <label htmlFor="expense-box">Expense</label>
+        <input type="checkbox" id="expense-box" onChange={onTypeChange} />
         <button type="submit" className="submit-button">
           Submit
         </button>

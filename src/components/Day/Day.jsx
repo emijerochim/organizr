@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Transaction from "../Transaction/Transaction";
 import moment from "moment/moment";
 import "./Day.scss";
-import { getBalanceByDay } from "../../util/getBalanceByDay";
+import { getBalanceByDay } from "./balanceFunctions";
+import { getTransactionsFromDay } from "./transactionFunctions";
 
 function Day({
   day,
@@ -17,10 +18,7 @@ function Day({
   let [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    let txs = user.transactions.filter((transaction) =>
-      moment(transaction.date).isSame(day.format())
-    );
-    setTransactions(txs);
+    setTransactions(getTransactionsFromDay(user.transactions, day));
     setBalance(getBalanceByDay(user.transactions, day));
   }, [day, user.transactions]);
 

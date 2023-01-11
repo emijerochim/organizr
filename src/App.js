@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { checkLoginToken, getUser } from "./routes/Login/loginFunctions";
 import moment from "moment/moment";
 import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
-import MonthView from "./routes/Month/MonthView";
-import checkLoginToken from "./util/checkLoginToken";
-import getUser from "./util/getUser";
+import Calendar from "./routes/Calendar/Calendar";
+import EditTransaction from "./components/Transaction/EditTransaction";
+import NewTransaction from "./components/Transaction/NewTransaction";
+import CategoryList from "./components/Category/CategoryList";
+import NewCategory from "./components/Category/NewCategory";
 import "./App.scss";
 
 function App() {
   const [user, setUser] = useState({});
-  const [dayToView, setDayToView] = useState(moment());
+  let [dayToView, setDayToView] = useState(moment());
+  let [triggerNewTransaction, setTriggerNewTransaction] = useState(false);
+  let [triggerEditTransaction, setTriggerEditTransaction] = useState(false);
+  let [transactionToEdit, setTransactionToEdit] = useState(null);
+  let [triggerCategoryList, setTriggerCategoryList] = useState(false);
+  let [triggerNewCategory, setTriggerNewCategory] = useState(false);
 
   useEffect(() => {
     checkLoginToken(setUser);
@@ -58,12 +66,55 @@ function App() {
           path="/calendar"
           element={
             user.loggedIn ? (
-              <MonthView
-                user={user}
-                setUser={setUser}
-                dayToView={dayToView}
-                setDayToView={setDayToView}
-              />
+              <div className="main">
+                <Calendar
+                  user={user}
+                  setUser={setUser}
+                  dayToView={dayToView}
+                  setDayToView={setDayToView}
+                  setTransactionToEdit={setTransactionToEdit}
+                  setTriggerNewTransaction={setTriggerNewTransaction}
+                  setTriggerEditTransaction={setTriggerEditTransaction}
+                  setTriggerCategoryList={setTriggerCategoryList}
+                  transactionToEdit={transactionToEdit}
+                />
+                {triggerEditTransaction ? (
+                  <EditTransaction
+                    user={user}
+                    setUser={setUser}
+                    transaction={transactionToEdit}
+                    triggerEditTransaction={triggerEditTransaction}
+                    setTransactionToEdit={setTransactionToEdit}
+                    setTriggerEditTransaction={setTriggerEditTransaction}
+                  />
+                ) : null}
+                {triggerNewTransaction ? (
+                  <NewTransaction
+                    user={user}
+                    setUser={setUser}
+                    dayToView={dayToView}
+                    triggerNewTransaction={triggerNewTransaction}
+                    setTriggerNewTransaction={setTriggerNewTransaction}
+                  />
+                ) : null}
+                {triggerCategoryList ? (
+                  <CategoryList
+                    user={user}
+                    setUser={setUser}
+                    triggerCategoryList={triggerCategoryList}
+                    setTriggerCategoryList={setTriggerCategoryList}
+                    setTriggerNewCategory={setTriggerNewCategory}
+                  />
+                ) : null}
+                {triggerNewCategory ? (
+                  <NewCategory
+                    user={user}
+                    setUser={setUser}
+                    triggerNewCategory={triggerNewCategory}
+                    setTriggerNewCategory={setTriggerNewCategory}
+                  />
+                ) : null}
+              </div>
             ) : (
               <Navigate to="/login" />
             )

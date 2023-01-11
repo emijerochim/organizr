@@ -13,4 +13,4 @@ const getCalendarDays = (date) => {
   return days;
 };
 
-export default getCalendarDays;
+export { getCalendarDays };
