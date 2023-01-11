@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { HuePicker } from "react-color";
 import { v4 as uuidv4 } from "uuid";
-import "./NewTransaction.scss";
+import "./NewCategory.scss";
 
 function NewCategory({
   user,
@@ -10,30 +11,39 @@ function NewCategory({
 }) {
   const id = uuidv4();
   const [name, setName] = useState("");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#ff0000");
   const [type, setType] = useState("");
+  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
-  const onNameChange = (event) => {
-    setName(event.target.value);
-  };
-  const onColorChange = (event) => {
-    setColor(event.target.value);
-  };
-  const onTypeChange = (event) => {
-    let incomeBox = document.getElementById("income-box");
-    let expenseBox = document.getElementById("expense-box");
-    if (event.target === incomeBox) {
-      expenseBox.checked = !incomeBox.checked;
-      setType("income");
-    } else if (event.target === expenseBox) {
-      incomeBox.checked = !expenseBox.checked;
-      setType("expense");
-    }
-  };
+  const incomeBox = useRef(null);
+  const expenseBox = useRef(null);
 
   const onExit = () => {
     setTriggerNewCategory(false);
   };
+
+  const onNameChange = (event) => {
+    setName(event.target.value);
+  };
+  const onColorChange = (color, event) => {
+    setColor(color.hex);
+  };
+  const onTypeChange = (event) => {
+    //expenseBox.setAttribute("checked", true);
+    if (event.target.id === "income-box") {
+      setType("income");
+      expenseBox.current.checked = false;
+    } else if (event.target.id === "expense-box") {
+      setType("expense");
+      incomeBox.current.checked = false;
+    }
+  };
+
+  useEffect(() => {
+    name && color && type
+      ? setDisableSubmitButton(false)
+      : setDisableSubmitButton(true);
+  }, [name, color, type]);
 
   const handleSubmit = async () => {
     const newCategory = {
@@ -86,20 +96,33 @@ function NewCategory({
         <label htmlFor="color" className="label">
           Color
         </label>
-        <input
-          type="text"
-          id="color"
-          className="input"
-          name="color"
-          value={color}
-          onChange={onColorChange}
-        />
-        <label htmlFor="income-box">Income</label>
-        <input type="checkbox" id="income-box" onChange={onTypeChange} />
-
-        <label htmlFor="expense-box">Expense</label>
-        <input type="checkbox" id="expense-box" onChange={onTypeChange} />
-        <button type="submit" className="submit-button">
+        <HuePicker color={color} onChangeComplete={onColorChange} />
+        <div className="type-container">
+          <label htmlFor="type" className="label">
+            Type
+          </label>
+          <div className="type-boxes">
+            <label htmlFor="income-box">Income</label>
+            <input
+              type="checkbox"
+              onChange={onTypeChange}
+              id="income-box"
+              ref={incomeBox}
+            />
+            <input
+              type="checkbox"
+              onChange={onTypeChange}
+              id="expense-box"
+              ref={expenseBox}
+            />
+            <label htmlFor="expense-box">Expense</label>
+          </div>
+        </div>
+        <button
+          type="submit"
+          className="submit-button"
+          disabled={disableSubmitButton}
+        >
           Submit
         </button>
       </form>
