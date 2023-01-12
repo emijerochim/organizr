@@ -1,27 +1,26 @@
-import React, { useState } from "react";
-import CategoryEdit from "./CategoryEdit";
+import React from "react";
 import "./Category.scss";
 
-function Category({ category, user, setUser }) {
-  let [editMode, setEditMode] = useState(false);
+function Category({ category, setCategory, triggers, setTriggers }) {
+  const openCategoryList = () => {
+    setCategory(category);
+    setTriggers({ ...triggers, categoryList: false, editCategory: true });
+  };
 
-  return editMode ? (
-    <CategoryEdit
-      category={category}
-      user={user}
-      setUser={setUser}
-      setEditMode={setEditMode}
-    />
-  ) : (
-    <div>
-      <div className="color-container">
-        <p>{category.color}</p>
-      </div>
+  return (
+    <div
+      className="category"
+      onClick={openCategoryList}
+      style={{ backgroundColor: category.color }}
+    >
       <div className="category-name">
         <h2>{category.name}</h2>
       </div>
       <div className="category-type">
         <p>{category.type}</p>
+      </div>
+      <div className="category-color">
+        <p>{category.color}</p>
       </div>
     </div>
   );

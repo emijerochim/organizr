@@ -5,10 +5,10 @@ function EditTransaction({
   user,
   setUser,
   transaction,
-  triggerEditTransaction,
-  setTriggerEditTransaction,
+  triggers,
+  setTriggers,
 }) {
-  const [amount, setAmount] = useState(transaction.amount);
+  const [amount, setAmount] = useState(Math.abs(transaction.amount));
   const [description, setDescription] = useState(transaction.description);
   const [category, setCategory] = useState(transaction.category);
 
@@ -28,7 +28,7 @@ function EditTransaction({
     categoryInput.current.value = "";
   };
   const onExit = () => {
-    setTriggerEditTransaction(false);
+    setTriggers({ ...triggers, editTransaction: false });
   };
 
   const handleSubmit = () => {
@@ -49,19 +49,11 @@ function EditTransaction({
         if (data.error) {
           console.log(data.error);
         } else {
-          const newTx = data.data[0];
-          const newTransactions = user.transactions.map((tx) => {
-            if (tx.id === newTx.id) {
-              return newTx;
-            } else {
-              return tx;
-            }
-          });
-          setUser({ ...user, transactions: newTransactions });
+          setUser({ ...user, transactions: data.transactions });
         }
       });
 
-    setTriggerEditTransaction(false);
+    setTriggers({ ...triggers, editTransaction: false });
   };
 
   const handleDeleteSubmit = () => {
@@ -86,7 +78,7 @@ function EditTransaction({
         }
       });
 
-    setTriggerEditTransaction(false);
+    setTriggers({ ...triggers, editTransaction: false });
   };
 
   useEffect(() => {
@@ -99,7 +91,7 @@ function EditTransaction({
     });
   }, [user.categories]);
 
-  return triggerEditTransaction ? (
+  return (
     <div>
       <h1>Edit Transaction</h1>
       <button onClick={onExit}>X</button>
@@ -139,8 +131,6 @@ function EditTransaction({
         Delete
       </button>
     </div>
-  ) : (
-    ""
   );
 }
 

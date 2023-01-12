@@ -6,26 +6,20 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { getBalanceByDay } from "../../components/Day/balanceFunctions";
 import "./NavBar.scss";
 
-function NavBar({
-  user,
-  setUser,
-  dayToView,
-  setDayToView,
-  setTriggerCategoryList,
-}) {
+function NavBar({ user, setUser, day, setDay, triggers, setTriggers }) {
   const handleLeftArrowClick = () => {
-    setDayToView(moment(dayToView).subtract(1, "months"));
+    setDay(moment(day).subtract(1, "months"));
   };
 
   const handleRightArrowClick = () => {
-    setDayToView(moment(dayToView).add(1, "months"));
+    setDay(moment(day).add(1, "months"));
   };
   const handleLogoutClick = () => {
     localStorage.removeItem("token");
     setUser({});
   };
   const handleCategoriesClick = () => {
-    setTriggerCategoryList(true);
+    setTriggers({ ...triggers, categoryList: true });
   };
 
   return (
@@ -58,7 +52,7 @@ function NavBar({
         <button className="left-arrow" onClick={handleLeftArrowClick}>
           <ChevronLeftIcon fontSize="small" />
         </button>
-        <p className="date">{dayToView.format("MM-YYYY")}</p>
+        <p className="date">{day.format("MM-YYYY")}</p>
         <button className="right-arrow" onClick={handleRightArrowClick}>
           <ChevronRightIcon fontSize="small" />
         </button>

@@ -1,4 +1,4 @@
-.new-category {
+.edit-category {
   background-color: #1b1b1b;
   color: #fff;
   position: fixed;
@@ -117,7 +117,31 @@
         }
       }
       &:focus {
-        background-color: darkblue;
+        background-color: rgb(38, 45, 184);
+      }
+    }
+  }
+
+  .delete-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    width: 15%;
+
+    .delete-button {
+      background-color: transparent;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 50px;
+
+      &:hover {
+        color: rgb(240, 212, 216);
+      }
+      &:active {
+        color: rgb(255, 65, 54);
       }
     }
   }

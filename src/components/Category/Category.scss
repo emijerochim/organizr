@@ -1,0 +1,28 @@
+.category {
+  min-height: 80px;
+  width: 90%;
+  background-color: #1b1b1b;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  &:hover {
+    cursor: pointer;
+  }
+
+  .category-name,
+  .category-type,
+  .category-color {
+    height: 80%;
+    width: 30%;
+    border: 1px solid white;
+    h2 {
+      font-size: 1.1rem;
+    }
+    p {
+      font-size: 1.1rem;
+    }
+  }
+}

@@ -6,37 +6,36 @@ import { getBalanceByDay } from "./balanceFunctions";
 import { getTransactionsFromDay } from "./transactionFunctions";
 
 function Day({
-  day,
   user,
-  setDayToView,
-  setTriggerDayView,
-  setTriggerNewTransaction,
-  setTriggerEditTransaction,
-  setTransactionToEdit,
+  setDay,
+  calendarDay,
+  setTransaction,
+  triggers,
+  setTriggers,
 }) {
   let [transactions, setTransactions] = useState([]);
   let [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    setTransactions(getTransactionsFromDay(user.transactions, day));
-    setBalance(getBalanceByDay(user.transactions, day));
-  }, [day, user.transactions]);
+    setTransactions(getTransactionsFromDay(user.transactions, calendarDay));
+    setBalance(getBalanceByDay(user.transactions, calendarDay));
+  }, [calendarDay, user.transactions, user.categories]);
 
   const openDayView = () => {
-    setTriggerDayView(true);
-    setDayToView(moment(day));
+    setDay(moment(calendarDay));
+    setTriggers({ ...triggers, dayView: true });
   };
   const openNewTransaction = () => {
-    setDayToView(moment(day));
-    setTriggerNewTransaction(true);
+    setDay(moment(calendarDay));
+    setTriggers({ ...triggers, newTransaction: true });
   };
 
   return (
     <div className="calendar-day">
       <div className="day-header">
-        <div className="day-header-clickable" onClick={openDayView}>
+        <div className="date-balance-container">
           <div className="day-date-container">
-            <p className="day-date">{day.format("D")}</p>
+            <p className="day-date">{calendarDay.format("D")}</p>
           </div>
           <div className="day-balance-container">
             <p className="day-balance">${balance}</p>
@@ -52,19 +51,22 @@ function Day({
         </div>
       </div>
 
-      <div className="transactions-container">
+      <div className="transactions-container" onClick={openDayView}>
         {transactions.map((transaction, txIndex) => {
           return (
             <Transaction
+              setDay={setDay}
               transaction={transaction}
-              setTriggerEditTransaction={setTriggerEditTransaction}
-              setTransactionToEdit={setTransactionToEdit}
-              setDayToView={setDayToView}
+              setTransaction={setTransaction}
+              triggers={triggers}
+              setTriggers={setTriggers}
+              isRenderedFromDayView={false}
               key={txIndex}
             />
           );
         })}
       </div>
+      <div className="bottom-shadow"></div>
     </div>
   );
 }

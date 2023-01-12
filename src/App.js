@@ -1,42 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { checkLoginToken, getUser } from "./routes/Login/loginFunctions";
 import moment from "moment/moment";
 import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
 import Calendar from "./routes/Calendar/Calendar";
 import EditTransaction from "./components/Transaction/EditTransaction";
 import NewTransaction from "./components/Transaction/NewTransaction";
-import CategoryList from "./components/Category/CategoryList";
+import EditCategory from "./components/Category/EditCategory";
 import NewCategory from "./components/Category/NewCategory";
+import CategoryList from "./components/Category/CategoryList";
+import DayView from "./components/Day/DayView";
+import { useAuth } from "./hooks/useAuth";
 import "./App.scss";
 
 function App() {
-  const [user, setUser] = useState({});
-  let [dayToView, setDayToView] = useState(moment());
-  let [triggerNewTransaction, setTriggerNewTransaction] = useState(false);
-  let [triggerEditTransaction, setTriggerEditTransaction] = useState(false);
-  let [transactionToEdit, setTransactionToEdit] = useState(null);
-  let [triggerCategoryList, setTriggerCategoryList] = useState(false);
-  let [triggerNewCategory, setTriggerNewCategory] = useState(false);
+  let [user, setUser] = useState({});
+  let [day, setDay] = useState(moment());
+  let [transaction, setTransaction] = useState({});
+  let [category, setCategory] = useState({});
+  let [triggers, setTriggers] = useState({
+    newTransaction: false,
+    editTransaction: false,
+    newCategory: false,
+    editCategory: false,
+    categoryList: false,
+    dayView: false,
+  });
 
-  useEffect(() => {
-    checkLoginToken(setUser);
-    if (user.username) {
-      getUser(user.username).then((data) => {
-        setUser((prevState) => {
-          return {
-            ...prevState,
-            transactions: data[0].transactions,
-            categories: data[0].categories,
-          };
-        });
-      });
-    }
-  }, [user.username, setUser]);
+  useAuth(user.username, setUser);
 
   return (
-    <main>
+    <main className="routes-main">
       <Routes>
         <Route
           path="/"
@@ -55,65 +49,81 @@ function App() {
         <Route
           path="/login"
           element={
-            user.loggedIn ? (
-              <Navigate to="/" />
-            ) : (
-              <Login user={user} setUser={setUser} />
-            )
+            user.loggedIn ? <Navigate to="/" /> : <Login setUser={setUser} />
           }
         />
         <Route
           path="/calendar"
           element={
             user.loggedIn ? (
-              <div className="main">
+              <div className="app-main">
                 <Calendar
                   user={user}
                   setUser={setUser}
-                  dayToView={dayToView}
-                  setDayToView={setDayToView}
-                  setTransactionToEdit={setTransactionToEdit}
-                  setTriggerNewTransaction={setTriggerNewTransaction}
-                  setTriggerEditTransaction={setTriggerEditTransaction}
-                  setTriggerCategoryList={setTriggerCategoryList}
-                  transactionToEdit={transactionToEdit}
+                  day={day}
+                  setDay={setDay}
+                  setTransaction={setTransaction}
+                  triggers={triggers}
+                  setTriggers={setTriggers}
                 />
-                {triggerEditTransaction ? (
-                  <EditTransaction
-                    user={user}
-                    setUser={setUser}
-                    transaction={transactionToEdit}
-                    triggerEditTransaction={triggerEditTransaction}
-                    setTransactionToEdit={setTransactionToEdit}
-                    setTriggerEditTransaction={setTriggerEditTransaction}
-                  />
-                ) : null}
-                {triggerNewTransaction ? (
-                  <NewTransaction
-                    user={user}
-                    setUser={setUser}
-                    dayToView={dayToView}
-                    triggerNewTransaction={triggerNewTransaction}
-                    setTriggerNewTransaction={setTriggerNewTransaction}
-                  />
-                ) : null}
-                {triggerCategoryList ? (
-                  <CategoryList
-                    user={user}
-                    setUser={setUser}
-                    triggerCategoryList={triggerCategoryList}
-                    setTriggerCategoryList={setTriggerCategoryList}
-                    setTriggerNewCategory={setTriggerNewCategory}
-                  />
-                ) : null}
-                {triggerNewCategory ? (
-                  <NewCategory
-                    user={user}
-                    setUser={setUser}
-                    triggerNewCategory={triggerNewCategory}
-                    setTriggerNewCategory={setTriggerNewCategory}
-                  />
-                ) : null}
+                {
+                  <main className="triggers-main">
+                    {triggers.newTransaction ? (
+                      <NewTransaction
+                        user={user}
+                        setUser={setUser}
+                        day={day}
+                        triggers={triggers}
+                        setTriggers={setTriggers}
+                      />
+                    ) : null}
+                    {triggers.editTransaction ? (
+                      <EditTransaction
+                        user={user}
+                        setUser={setUser}
+                        transaction={transaction}
+                        triggers={triggers}
+                        setTriggers={setTriggers}
+                      />
+                    ) : null}
+                    {triggers.newCategory ? (
+                      <NewCategory
+                        user={user}
+                        setUser={setUser}
+                        triggers={triggers}
+                        setTriggers={setTriggers}
+                      />
+                    ) : null}
+                    {triggers.editCategory ? (
+                      <EditCategory
+                        user={user}
+                        setUser={setUser}
+                        category={category}
+                        triggers={triggers}
+                        setTriggers={setTriggers}
+                      />
+                    ) : null}
+                    {triggers.categoryList ? (
+                      <CategoryList
+                        user={user}
+                        setUser={setUser}
+                        setCategory={setCategory}
+                        triggers={triggers}
+                        setTriggers={setTriggers}
+                      />
+                    ) : null}
+                    {triggers.dayView ? (
+                      <DayView
+                        user={user}
+                        day={day}
+                        setDay={setDay}
+                        setTransaction={setTransaction}
+                        triggers={triggers}
+                        setTriggers={setTriggers}
+                      />
+                    ) : null}
+                  </main>
+                }
               </div>
             ) : (
               <Navigate to="/login" />

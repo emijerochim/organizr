@@ -2,13 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NewTransaction.scss";
 
-function NewTransaction({
-  user,
-  setUser,
-  dayToView,
-  setTriggerNewTransaction,
-  triggerNewTransaction,
-}) {
+function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
   const id = uuidv4();
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
@@ -29,13 +23,13 @@ function NewTransaction({
     categoryInput.current.value = "";
   };
   const onExit = () => {
-    setTriggerNewTransaction(false);
+    setTriggers({ ...triggers, newTransaction: false });
   };
 
   const handleSubmit = async () => {
     const newTransaction = {
       token: user.token,
-      date: dayToView.format(),
+      date: day.format(),
       id,
       amount,
       description,
@@ -55,11 +49,11 @@ function NewTransaction({
         if (data.error) {
           console.log(data.error);
         } else {
-          setUser({ ...user, transactions: data.data });
+          setUser({ ...user, transactions: data.transactions });
         }
       });
 
-    setTriggerNewTransaction(false);
+    setTriggers({ ...triggers, newTransaction: false });
   };
 
   useEffect(() => {
@@ -72,7 +66,7 @@ function NewTransaction({
     });
   }, [user.categories]);
 
-  return triggerNewTransaction ? (
+  return (
     <div>
       <h1>New Transaction</h1>
       <button onClick={onExit}>X</button>
@@ -100,7 +94,7 @@ function NewTransaction({
           description="Category"
           list="categories"
           onChange={onCategoryChange}
-          placeholder={category}
+          placeholder={category.name}
         />
         <datalist id="categories"></datalist>
 
@@ -109,8 +103,6 @@ function NewTransaction({
         </button>
       </form>
     </div>
-  ) : (
-    ""
   );
 }
 

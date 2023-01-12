@@ -1,25 +1,28 @@
 import React from "react";
 import "./Transaction.scss";
-import moment from "moment/moment";
 
 function Transaction({
   transaction,
-  setTransactionToEdit,
-  setTriggerEditTransaction,
-  setDayToView,
+  setTransaction,
+  triggers,
+  setTriggers,
+  isRenderedFromDayView,
 }) {
   return (
     <div
-      className="transaction"
+      className={`transaction is-rendered-from-day-view-${isRenderedFromDayView}`}
       onClick={() => {
-        setTriggerEditTransaction(true);
-        setTransactionToEdit(transaction);
-        setDayToView(moment(transaction.date));
+        //
+        if (isRenderedFromDayView) {
+          setTriggers({ ...triggers, dayView: false, editTransaction: true });
+          setTransaction(transaction);
+        }
       }}
       style={{ backgroundColor: transaction.category.color }}
     >
       <div className="transaction-amount">{transaction.amount}</div>
       <div className="transaction-description">{transaction.description}</div>
+      <div className="transaction-category">{transaction.category.name}</div>
     </div>
   );
 }

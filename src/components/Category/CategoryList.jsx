@@ -2,18 +2,12 @@ import React from "react";
 import Category from "./Category";
 import "./CategoryList.scss";
 
-function CategoryList({
-  user,
-  setUser,
-  setTriggerCategoryList,
-  setTriggerNewCategory,
-}) {
+function CategoryList({ user, setUser, setCategory, triggers, setTriggers }) {
   const handleCloseButton = () => {
-    setTriggerCategoryList(false);
+    setTriggers({ ...triggers, categoryList: false });
   };
   const handleNewCategoryButton = () => {
-    setTriggerCategoryList(false);
-    setTriggerNewCategory(true);
+    setTriggers({ ...triggers, categoryList: false, newCategory: true });
   };
 
   return (
@@ -24,14 +18,18 @@ function CategoryList({
       </button>
       <div className="categories-container">
         {user.categories.map((category, index) => {
-          return (
-            <Category
-              category={category}
-              user={user}
-              setUser={setUser}
-              key={index}
-            />
-          );
+          if (category.name !== "Balance Update")
+            return (
+              <Category
+                user={user}
+                setUser={setUser}
+                category={category}
+                setCategory={setCategory}
+                triggers={triggers}
+                setTriggers={setTriggers}
+                key={index}
+              />
+            );
         })}
       </div>
       <button className="new-category-button" onClick={handleNewCategoryButton}>

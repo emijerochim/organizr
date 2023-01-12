@@ -1,41 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { getTransactionsBalances } from "./transactionFunctions";
+import { getTransactionsFromDay } from "./transactionFunctions";
 import Transaction from "../Transaction/Transaction";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import moment from "moment/moment";
 import "./DayView.scss";
 
-function DayView({
-  user,
-  triggerDayView,
-  setTriggerDayView,
-  dayToView,
-  setDayToView,
-  setTransactionToEdit,
-  setTriggerEditTransaction,
-  setTriggerNewTransaction,
-}) {
+function DayView({ user, day, setDay, setTransaction, triggers, setTriggers }) {
   let [dayTransactions, setDayTransactions] = useState([]);
 
   useEffect(() => {
-    setDayTransactions(getTransactionsBalances(user.transactions, dayToView));
-  }, [dayToView, setDayToView, user.transactions]);
+    setDayTransactions(getTransactionsFromDay(user.transactions, day));
+  }, [day, user.transactions]);
 
   const handlePreviousDayButton = () => {
-    setDayToView(moment(dayToView).subtract(1, "days"));
+    setDay(moment(day).subtract(1, "days"));
   };
   const handleNextDayButton = () => {
-    setDayToView(moment(dayToView).add(1, "days"));
+    setDay(moment(day).add(1, "days"));
   };
   const handleCloseButton = () => {
-    setTriggerDayView(false);
+    setTriggers({ ...triggers, dayView: false });
   };
   const openNewTransaction = () => {
-    setTriggerNewTransaction(true);
+    setTriggers({ ...triggers, newTransaction: true });
   };
 
-  return triggerDayView ? (
+  return triggers.dayView ? (
     <div className="day-view-container">
       <div className="day-view-header">
         <div className="day-view-buttons">
@@ -60,7 +51,7 @@ function DayView({
           </div>
         </div>
         <div className="day-view-date">
-          <h2>{dayToView.format("DD-MM")}</h2>
+          <h2>{day.format("DD-MM")}</h2>
         </div>
       </div>
       <div className="transactions-container">
@@ -68,8 +59,10 @@ function DayView({
           return (
             <Transaction
               transaction={transaction}
-              setTriggerEditTransaction={setTriggerEditTransaction}
-              setTransactionToEdit={setTransactionToEdit}
+              setTransaction={setTransaction}
+              triggers={triggers}
+              setTriggers={setTriggers}
+              isRenderedFromDayView={true}
               key={index}
             />
           );

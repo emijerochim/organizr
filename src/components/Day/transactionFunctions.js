@@ -1,9 +1,12 @@
 import moment from "moment";
 
 const getTransactionsFromDay = (transactions, day) => {
-  return transactions.filter((transaction) =>
-    moment(transaction.date).isSame(day.format())
-  );
+  //filter transactions and sort them by date (ascendent)
+  return transactions
+    .filter((transaction) => moment(transaction.date).isSame(day.format()))
+    .sort((a, b) => {
+      return moment(a.date).isAfter(b.date) ? 1 : -1;
+    });
 };
 
 //return a hash map with the transactions and its respective dates

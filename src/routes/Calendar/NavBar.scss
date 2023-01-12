@@ -17,14 +17,16 @@
   }
 
   .logo-container {
-    width: 8%;
-    background-color: #b3e5fc;
+    height: 100%;
+    width: 100px;
+    background-color: #64daed;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .EventNoteIcon {
-      height: 70%;
+    svg {
+      height: 50%;
+      width: 50%;
     }
   }
 
@@ -109,9 +111,10 @@
     .logout-button {
       border: none;
       background: none;
-    }
-    &:hover {
-      cursor: pointer;
+
+      svg {
+        cursor: pointer;
+      }
     }
   }
 }

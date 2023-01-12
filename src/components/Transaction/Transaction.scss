@@ -3,14 +3,12 @@
   flex-direction: row;
   overflow: hidden;
   justify-content: space-around;
-  height: 30%;
+  align-items: center;
+  height: 25%;
+  border-radius: 20px;
   margin-top: 5%;
 
-  .transaction-amount {
-    width: 50%;
-    text-align: center;
-  }
-  .transaction-description {
-    width: 50%;
+  div {
+    font-size: 0.9rem;
   }
 }

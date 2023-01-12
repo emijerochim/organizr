@@ -1,27 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HuePicker } from "react-color";
-import { v4 as uuidv4 } from "uuid";
-import "./NewCategory.scss";
+import "./EditCategory.scss";
 
-function NewCategory({ user, setUser, triggers, setTriggers }) {
-  const id = uuidv4();
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("#ff0000");
-  const [type, setType] = useState("");
+function EditCategory({ category, user, setUser, triggers, setTriggers }) {
+  const [name, setName] = useState(category.name);
+  const [color, setColor] = useState(category.color);
+  const [type, setType] = useState(category.type.name);
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   const incomeBox = useRef(null);
   const expenseBox = useRef(null);
 
-  const onExit = () => {
-    setTriggers({ ...triggers, newCategory: false });
-  };
-
   const onNameChange = (event) => {
     setName(event.target.value);
   };
-  const onColorChange = (color, event) => {
-    setColor(color.hex);
+  const onColorChange = (event) => {
+    setColor(event.hex);
   };
   const onTypeChange = (event) => {
     if (event.target.id === "income-box") {
@@ -32,6 +26,9 @@ function NewCategory({ user, setUser, triggers, setTriggers }) {
       incomeBox.current.checked = false;
     }
   };
+  const onExit = () => {
+    setTriggers({ ...triggers, editCategory: false });
+  };
 
   useEffect(() => {
     name && color && type
@@ -39,42 +36,67 @@ function NewCategory({ user, setUser, triggers, setTriggers }) {
       : setDisableSubmitButton(true);
   }, [name, color, type]);
 
-  const handleSubmit = async () => {
-    const newCategory = {
-      token: user.token,
-      id,
-      name,
-      color,
-      type,
-    };
+  const handleDeleteSubmit = () => {
+    const newCategories = user.categories.filter(
+      (userCategory) => userCategory.id !== category.id
+    );
 
-    await fetch(`http://localhost:3001/categories/${user.username}`, {
-      method: "post",
+    fetch(`http://localhost:3001/categories/${user.username}`, {
+      method: "delete",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
-      body: JSON.stringify(newCategory),
+      body: JSON.stringify({ token: user.token, id: category.id }),
     })
       .then((res) => res.json())
-
       .then((data) => {
         if (data.error) {
           console.log(data.error);
         } else {
-          setUser({ ...user, categories: data.categories });
+          setUser({ ...user, categories: newCategories });
         }
       });
-    setTriggers({ ...triggers, newCategory: false });
+
+    setTriggers({ ...triggers, editCategory: false });
+  };
+
+  const handleSubmit = () => {
+    category.name = name;
+    category.color = color;
+    category.type = type;
+
+    fetch(`http://localhost:3001/categories/${user.username}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify(category),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          setUser({
+            ...user,
+            categories: data.categories,
+            transactions: data.transactions,
+          });
+        }
+      });
+
+    setTriggers({ ...triggers, editCategory: false });
   };
 
   return (
-    <div className="new-category">
+    <div id="edit-category" className="edit-category">
       <button id="exit-button" onClick={onExit}>
         X
       </button>
-      <h1>New Category</h1>
-      <form id="new-category-form" onSubmit={handleSubmit}>
+      <h1>Edit Category</h1>
+      <form id="edit-category-form" onSubmit={handleSubmit}>
         <label htmlFor="name" className="label">
           Name
         </label>
@@ -112,18 +134,19 @@ function NewCategory({ user, setUser, triggers, setTriggers }) {
             <label htmlFor="expense-box">Expense</label>
           </div>
         </div>
-        <div className="submit-button-container">
-          <button
-            type="submit"
-            className="submit-button"
-            disabled={disableSubmitButton}
-          >
-            Submit
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="submit-button"
+          disabled={disableSubmitButton}
+        >
+          Submit
+        </button>
       </form>
+      <button className="delete-button-container" onClick={handleDeleteSubmit}>
+        <p className="delete-button">Delete category</p>
+      </button>
     </div>
   );
 }
 
-export default NewCategory;
+export default EditCategory;
