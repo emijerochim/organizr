@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Transaction from "../Transaction/Transaction";
 import moment from "moment/moment";
 import "./Day.scss";
-import { getBalanceByDay } from "./balanceFunctions";
-import { getTransactionsFromDay } from "./transactionFunctions";
+import { getBalanceByDay } from "../../util/balance";
+import { getTransactionsFromDay } from "../../util/transactions";
 
 function Day({
   user,

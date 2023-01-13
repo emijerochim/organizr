@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import "./NewTransaction.scss";
+import "../../styles/form.scss";
 
 function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
   const id = uuidv4();
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   const onAmountChange = (event) => {
     setAmount(parseFloat(event.target.value));
@@ -64,13 +65,19 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
       option.value = c;
       datalist.appendChild(option);
     });
-  }, [user.categories]);
+
+    amount && description && category
+      ? setDisableSubmitButton(false)
+      : setDisableSubmitButton(true);
+  }, [user.categories, amount, description, category]);
 
   return (
-    <div>
+    <div className="form">
       <h1>New Transaction</h1>
-      <button onClick={onExit}>X</button>
-      <form>
+      <button className="exit-button" onClick={onExit}>
+        X
+      </button>
+      <form id="new-transaction-form">
         <label htmlFor="amount">Amount</label>
         <input
           type="text"
@@ -97,10 +104,16 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
           placeholder={category.name}
         />
         <datalist id="categories"></datalist>
-
-        <button type="button" onClick={handleSubmit}>
-          Submit
-        </button>
+        <div className="submit-button-container">
+          <button
+            type="button"
+            className="submit-button"
+            disabled={disableSubmitButton}
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -3,7 +3,7 @@ import moment from "moment/moment";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { getBalanceByDay } from "../../components/Day/balanceFunctions";
+import { getBalanceByDay } from "../../util/balance";
 import "./NavBar.scss";
 
 function NavBar({ user, setUser, day, setDay, triggers, setTriggers }) {

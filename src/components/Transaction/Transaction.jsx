@@ -1,22 +1,14 @@
 import React from "react";
 import "./Transaction.scss";
 
-function Transaction({
-  transaction,
-  setTransaction,
-  triggers,
-  setTriggers,
-  isRenderedFromDayView,
-}) {
+function Transaction({ transaction, setTransaction, triggers, setTriggers }) {
   return (
     <div
-      className={`transaction is-rendered-from-day-view-${isRenderedFromDayView}`}
+      className="transaction"
       onClick={() => {
         //
-        if (isRenderedFromDayView) {
-          setTriggers({ ...triggers, dayView: false, editTransaction: true });
-          setTransaction(transaction);
-        }
+        setTriggers({ ...triggers, dayView: false, editTransaction: true });
+        setTransaction(transaction);
       }}
       style={{ backgroundColor: transaction.category.color }}
     >

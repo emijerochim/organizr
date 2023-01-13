@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid grey;
+  font-family: "Roboto", sans-serif;
 
   div {
     height: 100%;
@@ -42,13 +43,15 @@
       .today-date {
         color: #333;
         font-size: 1.1rem;
+        font-weight: 400;
       }
     }
     .user-balance-container {
       height: 50%;
       .user-balance {
         color: #333;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        font-weight: 200;
       }
     }
   }
@@ -99,9 +102,15 @@
       color: #333;
       font-size: 1.2rem;
       cursor: pointer;
+      transition: 0.2s ease-in-out;
 
       &:hover {
         color: #666;
+        transform: scale(1.1);
+      }
+      &:active {
+        color: black;
+        transform: scale(1);
       }
     }
   }

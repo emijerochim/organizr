@@ -8,7 +8,13 @@
   margin-bottom: 1%;
   border-right: 1px solid rgb(248, 249, 249);
   border-left: 1px solid rgb(248, 249, 249);
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: visible;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    scale: 1.05;
+  }
 
   .day-header {
     height: 25%;
@@ -55,9 +61,11 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      transition: all 0.3s ease-in-out;
+
       .add-transaction-button {
         font-size: 1rem;
-        background-color: #64daed;
+        background-color: #6ddeef;
         color: white;
         border: none;
         border-radius: 100%;
@@ -65,12 +73,16 @@
         width: 80%;
         font-size: 1.3rem;
         cursor: pointer;
+        transition: all 0.15s ease-in-out;
 
         &:hover {
-          background-color: #64edbc;
+          background-color: #64b8ed;
+          transform: scale(1.1);
         }
         &:active {
-          background-color: #6496ed;
+          background-color: #4a84e8;
+          color: rgb(62, 62, 62);
+          transform: scale(0.9);
         }
       }
     }

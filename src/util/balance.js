@@ -1,5 +1,5 @@
 import moment from "moment";
-import { getTransactionsBalances } from "./transactionFunctions";
+import { getTransactionsBalances } from "./transactions";
 
 const getBalanceByDay = (transactions, day) => {
   const transactionsBalances = getTransactionsBalances(transactions);

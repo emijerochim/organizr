@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HuePicker } from "react-color";
-import "./EditCategory.scss";
+import "../../styles/form.scss";
 
 function EditCategory({ category, user, setUser, triggers, setTriggers }) {
   const [name, setName] = useState(category.name);
   const [color, setColor] = useState(category.color);
-  const [type, setType] = useState(category.type.name);
+  const [type, setType] = useState(category.type);
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   const incomeBox = useRef(null);
@@ -91,8 +91,8 @@ function EditCategory({ category, user, setUser, triggers, setTriggers }) {
   };
 
   return (
-    <div id="edit-category" className="edit-category">
-      <button id="exit-button" onClick={onExit}>
+    <div className="form">
+      <button className="exit-button" onClick={onExit}>
         X
       </button>
       <h1>Edit Category</h1>
@@ -124,12 +124,14 @@ function EditCategory({ category, user, setUser, triggers, setTriggers }) {
               onChange={onTypeChange}
               id="income-box"
               ref={incomeBox}
+              defaultChecked={type === "income" ? true : false}
             />
             <input
               type="checkbox"
               onChange={onTypeChange}
               id="expense-box"
               ref={expenseBox}
+              defaultChecked={type === "expense" ? true : false}
             />
             <label htmlFor="expense-box">Expense</label>
           </div>

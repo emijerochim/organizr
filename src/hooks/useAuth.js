@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { checkLoginToken, getUser } from "../routes/Login/loginFunctions";
+import { checkLoginToken, getUser } from "../util/login";
 
 export function useAuth(username, setUser) {
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HuePicker } from "react-color";
 import { v4 as uuidv4 } from "uuid";
-import "./NewCategory.scss";
+import "../../styles/form.scss";
 
 function NewCategory({ user, setUser, triggers, setTriggers }) {
   const id = uuidv4();
@@ -69,8 +69,8 @@ function NewCategory({ user, setUser, triggers, setTriggers }) {
   };
 
   return (
-    <div className="new-category">
-      <button id="exit-button" onClick={onExit}>
+    <div className="form">
+      <button className="exit-button" onClick={onExit}>
         X
       </button>
       <h1>New Category</h1>

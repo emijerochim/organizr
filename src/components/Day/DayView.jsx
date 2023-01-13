@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getTransactionsFromDay } from "./transactionFunctions";
+import { getTransactionsFromDay } from "../../util/transactions";
 import Transaction from "../Transaction/Transaction";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import moment from "moment/moment";
-import "./DayView.scss";
+import "../../styles/list.scss";
 
 function DayView({ user, day, setDay, setTransaction, triggers, setTriggers }) {
   let [dayTransactions, setDayTransactions] = useState([]);
@@ -23,38 +23,34 @@ function DayView({ user, day, setDay, setTransaction, triggers, setTriggers }) {
     setTriggers({ ...triggers, dayView: false });
   };
   const openNewTransaction = () => {
-    setTriggers({ ...triggers, newTransaction: true });
+    setTriggers({ ...triggers, dayView: false, newTransaction: true });
   };
 
-  return triggers.dayView ? (
-    <div className="day-view-container">
+  return (
+    <div className="list">
+      <h2>{day.format("DD-MM")}</h2>
+      <button className="exit-button" onClick={handleCloseButton}>
+        X
+      </button>
       <div className="day-view-header">
         <div className="day-view-buttons">
           <div className="day-change-buttons-container">
             <button
-              className="next-day-button"
+              className="day-change-button next-day-button"
               onClick={handlePreviousDayButton}
             >
               <ChevronLeftIcon />
             </button>
             <button
-              className="previous-day-button"
+              className="day-change-button previous-day-button"
               onClick={handleNextDayButton}
             >
               <ChevronRightIcon />
             </button>
           </div>
-          <div className="close-button-container">
-            <button className="close-button" onClick={handleCloseButton}>
-              X
-            </button>
-          </div>
-        </div>
-        <div className="day-view-date">
-          <h2>{day.format("DD-MM")}</h2>
         </div>
       </div>
-      <div className="transactions-container">
+      <div className="items-container">
         {dayTransactions.map((transaction, index) => {
           return (
             <Transaction
@@ -68,14 +64,12 @@ function DayView({ user, day, setDay, setTransaction, triggers, setTriggers }) {
           );
         })}
       </div>
-      <div className="day-view-footer">
-        <button className="new-tx-button" onClick={openNewTransaction}>
+      <div className="new-button-container">
+        <button className="new-button" onClick={openNewTransaction}>
           Add new transaction
         </button>
       </div>
     </div>
-  ) : (
-    ""
   );
 }
 

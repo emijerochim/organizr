@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./EditTransaction.scss";
+import "../../styles/form.scss";
 
 function EditTransaction({
   user,
@@ -92,10 +92,12 @@ function EditTransaction({
   }, [user.categories]);
 
   return (
-    <div>
+    <div className="form">
       <h1>Edit Transaction</h1>
-      <button onClick={onExit}>X</button>
-      <form>
+      <button className="exit-button" onClick={onExit}>
+        X
+      </button>
+      <form id="edit-transaction-form">
         <label htmlFor="amount">Amount</label>
         <input
           type="text"
@@ -123,12 +125,12 @@ function EditTransaction({
         />
         <datalist id="categories"></datalist>
 
-        <button type="button" onClick={handleSubmit}>
+        <button type="submit" className="submit-button" onClick={handleSubmit}>
           Submit
         </button>
       </form>
-      <button type="button" onClick={handleDeleteSubmit}>
-        Delete
+      <button className="delete-button-container" onClick={handleDeleteSubmit}>
+        <p className="delete-button">Delete</p>
       </button>
     </div>
   );

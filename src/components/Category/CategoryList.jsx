@@ -1,6 +1,6 @@
 import React from "react";
 import Category from "./Category";
-import "./CategoryList.scss";
+import "../../styles/list.scss";
 
 function CategoryList({ user, setUser, setCategory, triggers, setTriggers }) {
   const handleCloseButton = () => {
@@ -11,12 +11,17 @@ function CategoryList({ user, setUser, setCategory, triggers, setTriggers }) {
   };
 
   return (
-    <div className="category-view-container">
+    <div className="list">
       <h2>Categories</h2>
-      <button className="categories-close-button" onClick={handleCloseButton}>
+      <button className="exit-button" onClick={handleCloseButton}>
         X
       </button>
-      <div className="categories-container">
+      <div className="new-button-container">
+        <button className="new-button" onClick={handleNewCategoryButton}>
+          New Category
+        </button>
+      </div>
+      <div className="items-container">
         {user.categories.map((category, index) => {
           if (category.name !== "Balance Update")
             return (
@@ -32,9 +37,6 @@ function CategoryList({ user, setUser, setCategory, triggers, setTriggers }) {
             );
         })}
       </div>
-      <button className="new-category-button" onClick={handleNewCategoryButton}>
-        New Category
-      </button>
     </div>
   );
 }

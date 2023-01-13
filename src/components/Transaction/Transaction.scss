@@ -1,14 +1,26 @@
 .transaction {
+  max-height: 80px;
   display: flex;
   flex-direction: row;
   overflow: hidden;
   justify-content: space-around;
   align-items: center;
   height: 25%;
+  width: 90%;
   border-radius: 20px;
   margin-top: 5%;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
 
   div {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:focus {
+    transform: scale(0.95);
   }
 }

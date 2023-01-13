@@ -1,4 +1,8 @@
-.new-category {
+@use "./exitButton";
+@use "./deleteButton";
+@use "./submitButton";
+
+.form {
   background-color: #1b1b1b;
   color: #fff;
   position: fixed;
@@ -12,20 +16,6 @@
   justify-content: center;
   flex-direction: column;
 
-  #exit-button {
-    position: absolute;
-    top: 40px;
-    right: 60px;
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    font-size: 2rem;
-    &:hover {
-      cursor: pointer;
-      color: #ff4136;
-    }
-  }
-
   h1 {
     font-size: 2rem;
   }
@@ -34,11 +24,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    .label {
+    label {
       font-size: 1.3rem;
       margin-top: 40px;
     }
-    .input {
+    input {
       width: 70%;
       padding: 12px 20px;
       margin: 8px 0;
@@ -58,16 +48,22 @@
     .type-container {
       display: flex;
       flex-direction: column;
-      padding-bottom: 15%;
-      .label {
+      justify-content: center;
+      align-items: center;
+
+      label {
         text-align: center;
-        margin-bottom: 10%;
       }
 
       .type-boxes {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        label {
+          margin-bottom: 10px;
+        }
 
         #income-box,
         #expense-box {
@@ -95,30 +91,14 @@
         }
       }
     }
-    .submit-button {
-      background-color: #0c78c6;
-      color: #fff;
-      height: 50px;
-      width: 120px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      &:hover {
-        cursor: pointer;
-        background-color: rgb(93, 164, 219);
-      }
-      &:disabled {
-        background-color: #ff4136;
-        color: #fff;
-        border: none;
-        opacity: 0.5;
-        &:hover {
-          cursor: not-allowed;
-        }
-      }
-      &:focus {
-        background-color: darkblue;
-      }
-    }
+  }
+
+  .delete-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    width: 15%;
   }
 }
