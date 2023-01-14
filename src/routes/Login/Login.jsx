@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Login.scss";
 import API_URL from "../../util/env";
 
-function Login({ setUser, API_URL }) {
+function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
