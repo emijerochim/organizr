@@ -11,7 +11,6 @@ import NewCategory from "./components/Category/NewCategory";
 import CategoryList from "./components/Category/CategoryList";
 import DayView from "./components/Day/DayView";
 import { useAuth } from "./hooks/useAuth";
-import API_URL from "./util/env";
 import "./App.scss";
 
 function App() {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import "./Register.scss";
+import API_URL from "../../util/env";
 
 function Register({ API_URL }) {
   const [username, setUsername] = useState("");
