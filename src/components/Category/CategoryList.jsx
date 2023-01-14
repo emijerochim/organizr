@@ -22,7 +22,7 @@ function CategoryList({ user, setUser, setCategory, triggers, setTriggers }) {
         </button>
       </div>
       <div className="items-container">
-        {user.categories.map((category, index) => {
+        {user.categories.forEach((category, index) => {
           if (category.name !== "Balance Update")
             return (
               <Category

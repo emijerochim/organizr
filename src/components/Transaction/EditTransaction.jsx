@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../../styles/form.scss";
+import API_URL from "../../util/env";
 
 function EditTransaction({
   user,
@@ -36,7 +37,7 @@ function EditTransaction({
     transaction.description = description;
     transaction.category = category;
 
-    fetch(`http://localhost:3001/transactions/${user.username}`, {
+    fetch(`${API_URL}/transactions/${user.username}`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +62,7 @@ function EditTransaction({
       (tx) => tx.id !== transaction.id
     );
 
-    fetch(`http://localhost:3001/transactions/${user.username}`, {
+    fetch(`${API_URL}/transactions/${user.username}`, {
       method: "delete",
       headers: {
         "Content-Type": "application/json",

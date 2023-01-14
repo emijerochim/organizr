@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { HuePicker } from "react-color";
 import { v4 as uuidv4 } from "uuid";
 import "../../styles/form.scss";
+import API_URL from "../../util/env";
 
 function NewCategory({ user, setUser, triggers, setTriggers }) {
   const id = uuidv4();
@@ -48,7 +49,7 @@ function NewCategory({ user, setUser, triggers, setTriggers }) {
       type,
     };
 
-    await fetch(`http://localhost:3001/categories/${user.username}`, {
+    await fetch(`${API_URL}/categories/${user.username}`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

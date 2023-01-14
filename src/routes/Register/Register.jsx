@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import "./Register.scss";
 
-function Register() {
+function Register({ API_URL }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +19,7 @@ function Register() {
   };
 
   const onSubmitRegister = () => {
-    fetch("http://localhost:3001/register", {
+    fetch(`${API_URL}/register`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

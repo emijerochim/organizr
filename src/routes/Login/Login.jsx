@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Login.scss";
 
-function Login({ setUser }) {
+function Login({ setUser, API_URL }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +14,7 @@ function Login({ setUser }) {
   };
 
   const onSubmitLogin = () => {
-    fetch("http://localhost:3001/login", {
+    fetch(`${API_URL}/login`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "../../styles/form.scss";
+import API_URL from "../../util/env";
 
 function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
   const id = uuidv4();
@@ -37,7 +38,7 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
       category,
     };
 
-    await fetch(`http://localhost:3001/transactions/${user.username}`, {
+    await fetch(`${API_URL}/transactions/${user.username}`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

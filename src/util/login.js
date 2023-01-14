@@ -1,7 +1,9 @@
+import API_URL from "./env";
+
 const checkLoginToken = async (setUser) => {
   const localToken = localStorage.getItem("token");
   if (localToken) {
-    fetch("http://localhost:3001/verify-token", {
+    fetch(`${API_URL}/verify-token`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -18,7 +20,7 @@ const checkLoginToken = async (setUser) => {
   }
 };
 const getUser = async (username) => {
-  return fetch(`http://localhost:3001/users/${username}`)
+  return fetch(`${API_URL}/users/${username}`)
     .then((res) => res.json())
     .then((data) => data);
 };

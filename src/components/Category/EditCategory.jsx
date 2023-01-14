@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HuePicker } from "react-color";
 import "../../styles/form.scss";
+import API_URL from "../../util/env";
 
 function EditCategory({ category, user, setUser, triggers, setTriggers }) {
   const [name, setName] = useState(category.name);
@@ -41,7 +42,7 @@ function EditCategory({ category, user, setUser, triggers, setTriggers }) {
       (userCategory) => userCategory.id !== category.id
     );
 
-    fetch(`http://localhost:3001/categories/${user.username}`, {
+    fetch(`${API_URL}/categories/${user.username}`, {
       method: "delete",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +67,7 @@ function EditCategory({ category, user, setUser, triggers, setTriggers }) {
     category.color = color;
     category.type = type;
 
-    fetch(`http://localhost:3001/categories/${user.username}`, {
+    fetch(`${API_URL}/categories/${user.username}`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
