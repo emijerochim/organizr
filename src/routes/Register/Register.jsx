@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import "./Register.scss";
 import API_URL from "../../util/env";
 
-function Register({ API_URL }) {
+function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
