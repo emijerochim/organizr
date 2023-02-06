@@ -5,7 +5,10 @@ const checkLoginToken = async (setUser) => {
   if (localToken) {
     fetch(`${API_URL}/verify-token`, {
       method: "post",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localToken}`,
+      },
       body: JSON.stringify({
         token: localToken,
       }),
