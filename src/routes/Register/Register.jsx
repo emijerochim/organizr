@@ -22,7 +22,10 @@ function Register() {
   const onSubmitRegister = () => {
     fetch(`${API_URL}/register`, {
       method: "post",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
       body: JSON.stringify({
         username: username,
         email: email,
@@ -32,6 +35,12 @@ function Register() {
       .then((res) => res.json())
       .then((data) => {
         if (data.username) {
+          setUsername({
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            loggedIn: true,
+          });
           setRegistered(true);
         }
       });

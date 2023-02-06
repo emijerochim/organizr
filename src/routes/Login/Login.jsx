@@ -25,11 +25,20 @@ function Login({ setUser }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.token) {
-          setUser(data.user);
-          data.user.loggedIn = true;
+        if (data.user) {
+          setUser({
+            username: data.user.username,
+            email: data.user.email,
+            password: data.user.password,
+            loggedIn: true,
+            transactions: data.user.transactions,
+            categories: data.user.categories,
+          });
+          localStorage.setItem("user", data.user);
         }
-        localStorage.setItem("token", data.token);
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
       });
   };
 

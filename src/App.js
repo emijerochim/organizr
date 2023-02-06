@@ -14,7 +14,12 @@ import { useAuth } from "./hooks/useAuth";
 import "./App.scss";
 
 function App() {
-  let [user, setUser] = useState({});
+  let [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    loggedIn: false,
+  });
   let [day, setDay] = useState(moment());
   let [transaction, setTransaction] = useState({});
   let [category, setCategory] = useState({});

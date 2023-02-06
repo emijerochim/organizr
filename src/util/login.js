@@ -1,23 +1,34 @@
 import API_URL from "./env";
 
 const checkLoginToken = async (setUser) => {
-  const localToken = localStorage.getItem("token");
-  if (localToken) {
+  const token = localStorage.getItem("token");
+  if (token) {
     fetch(`${API_URL}/verify-token`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localToken}`,
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        token: localToken,
+        token: token,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.user) {
-          setUser(data.user);
-          setUser({ ...data.user, loggedIn: true, token: localToken });
+          setUser({
+            id: data.user._id,
+            username: data.user.username,
+            email: data.user.email,
+            password: data.user.password,
+            loggedIn: true,
+            transactions: data.user.transactions,
+            categories: data.user.categories,
+          });
+        }
+        if (data.token) {
+          localStorage.setItem("token", data.token);
         }
       });
   }
