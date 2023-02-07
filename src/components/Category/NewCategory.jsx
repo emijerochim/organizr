@@ -42,7 +42,7 @@ function NewCategory({ user, setUser, triggers, setTriggers }) {
 
   const handleSubmit = async () => {
     const newCategory = {
-      token: user.token,
+      token: localStorage.getItem("token"),
       id,
       name,
       color,
@@ -53,7 +53,7 @@ function NewCategory({ user, setUser, triggers, setTriggers }) {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(newCategory),
     })

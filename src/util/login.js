@@ -16,6 +16,7 @@ const checkLoginToken = async (setUser) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data.user);
         if (data.user) {
           setUser({
             id: data.user._id,
@@ -26,6 +27,7 @@ const checkLoginToken = async (setUser) => {
             transactions: data.user.transactions,
             categories: data.user.categories,
           });
+          localStorage.setItem("user", data.user);
         }
         if (data.token) {
           localStorage.setItem("token", data.token);

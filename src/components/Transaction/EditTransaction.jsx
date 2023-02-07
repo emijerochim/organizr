@@ -41,7 +41,7 @@ function EditTransaction({
       method: "put",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(transaction),
     })
@@ -66,9 +66,12 @@ function EditTransaction({
       method: "delete",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify({ token: user.token, id: transaction.id }),
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+        id: transaction.id,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {

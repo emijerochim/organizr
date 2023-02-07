@@ -37,11 +37,11 @@
           transform: scale(1.15);
           background-color: #dfdfdf;
         }
-        &:focus {
+        &:active {
           transform: scale(0.95);
           background-color: #535353;
         }
-        &:focus:after {
+        &:active:after {
           transform: scale(1);
           background-color: white;
         }

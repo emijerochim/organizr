@@ -46,9 +46,12 @@ function EditCategory({ category, user, setUser, triggers, setTriggers }) {
       method: "delete",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify({ token: user.token, id: category.id }),
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+        id: category.id,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -71,7 +74,7 @@ function EditCategory({ category, user, setUser, triggers, setTriggers }) {
       method: "put",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(category),
     })

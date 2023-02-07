@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Category from "./Category";
 import "../../styles/list.scss";
 
 function CategoryList({ user, setUser, setCategory, triggers, setTriggers }) {
+  let [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    setCategories(user.categories);
+  }, [user.categories]);
+
   const handleCloseButton = () => {
     setTriggers({ ...triggers, categoryList: false });
   };
@@ -22,19 +28,18 @@ function CategoryList({ user, setUser, setCategory, triggers, setTriggers }) {
         </button>
       </div>
       <div className="items-container">
-        {user.categories.forEach((category, index) => {
-          if (category.name !== "Balance Update")
-            return (
-              <Category
-                user={user}
-                setUser={setUser}
-                category={category}
-                setCategory={setCategory}
-                triggers={triggers}
-                setTriggers={setTriggers}
-                key={index}
-              />
-            );
+        {categories.map((category, index) => {
+          return (
+            <Category
+              user={user}
+              setUser={setUser}
+              category={category}
+              setCategory={setCategory}
+              triggers={triggers}
+              setTriggers={setTriggers}
+              key={index}
+            />
+          );
         })}
       </div>
     </div>

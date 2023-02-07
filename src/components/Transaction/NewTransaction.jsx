@@ -5,24 +5,54 @@ import API_URL from "../../util/env";
 
 function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
   const id = uuidv4();
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const categoryInput = useRef(null);
+  const categoriesDatalist = useRef(null);
+
+  useEffect(() => {
+    console.log("setting categories");
+    setCategories(user.categories);
+
+    if (categoriesDatalist.current.children.length === 0) {
+      categories.forEach((c) => {
+        const option = document.createElement("option");
+        option.value = c.name;
+        categoriesDatalist.current.appendChild(option);
+      });
+    }
+  }, [categories, user.categories]);
+
+  useEffect(() => {
+    const isCategoryValid = categories.find(
+      (c) => c.name === categoryInput.current.value
+    );
+    const isAmountValid = amount >= 0;
+    const isDescriptionValid = description.length > 0;
+
+    isCategoryValid && isAmountValid && isDescriptionValid
+      ? setDisableSubmitButton(false)
+      : setDisableSubmitButton(true);
+  }, [amount, categories, category, description]);
 
   const onAmountChange = (event) => {
+    if (
+      event.target.value === "" ||
+      !Number.isInteger(parseInt(event.target.value))
+    ) {
+      setAmount(0);
+      return;
+    }
     setAmount(parseFloat(event.target.value));
   };
   const onDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
-  const categoryInput = useRef(null);
   const onCategoryChange = async (event) => {
-    await setCategory(
-      user.categories.find((category) => category.name === event.target.value)
-    );
-    categoryInput.current.placeholder = event.target.value;
-    categoryInput.current.value = "";
+    setCategory(event.target.value);
   };
   const onExit = () => {
     setTriggers({ ...triggers, newTransaction: false });
@@ -30,19 +60,19 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
 
   const handleSubmit = async () => {
     const newTransaction = {
-      token: user.token,
       date: day.format(),
       id,
       amount,
       description,
       category,
+      token: localStorage.getItem("token"),
     };
 
     await fetch(`${API_URL}/transactions/${user.username}`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(newTransaction),
     })
@@ -57,20 +87,6 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
 
     setTriggers({ ...triggers, newTransaction: false });
   };
-
-  useEffect(() => {
-    const categories = user.categories.map((c) => c.name);
-    const datalist = document.getElementById("categories");
-    categories.forEach((c) => {
-      const option = document.createElement("option");
-      option.value = c;
-      datalist.appendChild(option);
-    });
-
-    amount && description && category
-      ? setDisableSubmitButton(false)
-      : setDisableSubmitButton(true);
-  }, [user.categories, amount, description, category]);
 
   return (
     <div className="form">
@@ -100,11 +116,10 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
           id="category-input"
           ref={categoryInput}
           description="Category"
-          list="categories"
+          list="categories-datalist"
           onChange={onCategoryChange}
-          placeholder={category.name}
         />
-        <datalist id="categories"></datalist>
+        <datalist id="categories-datalist" ref={categoriesDatalist}></datalist>
         <div className="submit-button-container">
           <button
             type="button"
