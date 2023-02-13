@@ -44,7 +44,7 @@ const NavBar = ({ user, setUser, day, setDay, triggers, setTriggers }) => {
         </div>
         <div className="user-balance-container">
           <p className="user-balance">
-            {getBalanceByDay(user.transactions, day)}
+            ${getBalanceByDay(user.transactions, day)}
           </p>
         </div>
       </div>
@@ -52,12 +52,13 @@ const NavBar = ({ user, setUser, day, setDay, triggers, setTriggers }) => {
         <button className="left-arrow" onClick={handleLeftArrowClick}>
           <ChevronLeftIcon fontSize="small" />
         </button>
-        <p className="date">{day.format("MM-YYYY")}</p>
+        <div className="date-container">
+          <p className="date">{day.format("MM-YYYY")}</p>
+        </div>
         <button className="right-arrow" onClick={handleRightArrowClick}>
           <ChevronRightIcon fontSize="small" />
         </button>
       </div>
-      <div className="stats-container"></div>
       <div className="categories-button-container">
         <button className="categories-button" onClick={handleCategoriesClick}>
           <p>Categories</p>

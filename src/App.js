@@ -77,7 +77,6 @@ function App() {
 
                 <Calendar
                   user={user}
-                  setUser={setUser}
                   day={day}
                   setDay={setDay}
                   setTransaction={setTransaction}

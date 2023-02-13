@@ -33,13 +33,11 @@ function Day({
   return (
     <div className="calendar-day">
       <div className="day-header">
-        <div className="date-balance-container">
-          <div className="day-date-container">
-            <p className="day-date">{calendarDay.format("D")}</p>
-          </div>
-          <div className="day-balance-container">
-            <p className="day-balance">${balance}</p>
-          </div>
+        <div className="day-date-container">
+          <p className="day-date">{calendarDay.format("D")}</p>
+        </div>
+        <div className="day-balance-container">
+          <p className="day-balance">${balance}</p>
         </div>
         <div className="add-transaction-button-container">
           <button

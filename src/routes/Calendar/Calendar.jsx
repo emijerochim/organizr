@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Day from "../../components/Day/Day";
-import NavBar from "./NavBar";
 import { getCalendarDays } from "../../util/calendar";
 import "./Calendar.scss";
 
 function Calendar({
   user,
-  setUser,
   day,
   setDay,
   setTransaction,

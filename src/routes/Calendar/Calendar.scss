@@ -34,3 +34,13 @@
     width: 100%;
   }
 }
+
+@media (max-width: 600px) {
+  .calendar-container {
+    .weekday-list {
+      .weekday-item {
+        display: none;
+      }
+    }
+  }
+}

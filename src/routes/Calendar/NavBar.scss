@@ -5,7 +5,6 @@
   width: 98vw;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid grey;
   font-family: "Roboto", sans-serif;
@@ -18,12 +17,8 @@
   }
 
   .logo-container {
-    height: 100%;
-    width: 100px;
+    width: 5%;
     background-color: #64daed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     svg {
       height: 50%;
@@ -33,17 +28,18 @@
 
   .user-data-container {
     width: 10%;
-    display: flex;
+    margin-left: 1rem;
     flex-direction: column;
-    margin-right: auto;
-    justify-content: space-around;
-    align-items: space-around;
+
     .today-date-container {
       height: 50%;
+      width: 100%;
       .today-date {
         color: #333;
         font-size: 1.1rem;
         font-weight: 400;
+        text-align: center;
+        width: 100%;
       }
     }
     .user-balance-container {
@@ -57,13 +53,12 @@
   }
 
   .date-change-container {
-    display: flex;
     width: 15%;
-    justify-content: space-around;
-    align-items: center;
 
-    .date {
-      font-size: 1.3rem;
+    .date-container {
+      .date {
+        font-size: 1.3rem;
+      }
     }
 
     .left-arrow,
@@ -85,16 +80,8 @@
     }
   }
 
-  .stats-container {
-    display: flex;
-    width: 17%;
-  }
-
   .categories-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 15%;
+    width: 10%;
 
     .categories-button {
       background-color: transparent;
@@ -116,13 +103,73 @@
   }
 
   .logout-container {
-    width: 10%;
+    width: 5%;
     .logout-button {
       border: none;
       background: none;
 
       svg {
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    .logo-container {
+      width: 80px;
+    }
+
+    .user-data-container {
+      width: 15%;
+      .today-date-container {
+        .today-date {
+          font-size: 0.9rem;
+        }
+      }
+      .user-balance-container {
+        .user-balance {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .date-change-container {
+      width: 30%;
+      .date-container {
+        .date {
+          text-align: center;
+          max-width: 50px;
+          font-size: 1.1rem;
+        }
+      }
+      .left-arrow,
+      .right-arrow {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+    }
+
+    .categories-button-container {
+      width: 20%;
+      .categories-button {
+        p {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .logout-container {
+      width: 10%;
+
+      logout-button {
+        svg {
+          height: 20px;
+          width: 20px;
+        }
       }
     }
   }
