@@ -6,7 +6,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { getBalanceByDay } from "../../util/balance";
 import "./NavBar.scss";
 
-function NavBar({ user, setUser, day, setDay, triggers, setTriggers }) {
+const NavBar = ({ user, setUser, day, setDay, triggers, setTriggers }) => {
   const handleLeftArrowClick = () => {
     setDay(moment(day).subtract(1, "months"));
   };
@@ -44,7 +44,7 @@ function NavBar({ user, setUser, day, setDay, triggers, setTriggers }) {
         </div>
         <div className="user-balance-container">
           <p className="user-balance">
-            ${getBalanceByDay(user.transactions, moment())}
+            {getBalanceByDay(user.transactions, day)}
           </p>
         </div>
       </div>
@@ -71,6 +71,6 @@ function NavBar({ user, setUser, day, setDay, triggers, setTriggers }) {
       </div>
     </div>
   );
-}
+};
 
 export default NavBar;

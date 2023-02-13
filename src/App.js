@@ -4,6 +4,7 @@ import moment from "moment/moment";
 import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
 import Calendar from "./routes/Calendar/Calendar";
+import NavBar from "./routes/Calendar/NavBar";
 import EditTransaction from "./components/Transaction/EditTransaction";
 import NewTransaction from "./components/Transaction/NewTransaction";
 import EditCategory from "./components/Category/EditCategory";
@@ -15,10 +16,13 @@ import "./App.scss";
 
 function App() {
   let [user, setUser] = useState({
+    id: "",
     username: "",
     email: "",
     password: "",
     loggedIn: false,
+    transactions: [],
+    categories: [],
   });
   let [day, setDay] = useState(moment());
   let [transaction, setTransaction] = useState({});
@@ -32,7 +36,7 @@ function App() {
     dayView: false,
   });
 
-  useAuth(user.username, setUser);
+  useAuth(user, setUser);
 
   return (
     <main className="routes-main">
@@ -62,6 +66,15 @@ function App() {
           element={
             user.loggedIn ? (
               <div className="app-main">
+                <NavBar
+                  user={user}
+                  setUser={setUser}
+                  day={day}
+                  setDay={setDay}
+                  triggers={triggers}
+                  setTriggers={setTriggers}
+                />
+
                 <Calendar
                   user={user}
                   setUser={setUser}

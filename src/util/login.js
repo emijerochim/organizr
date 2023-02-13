@@ -16,29 +16,32 @@ const checkLoginToken = async (setUser) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.user);
         if (data.user) {
-          setUser({
-            id: data.user._id,
-            username: data.user.username,
-            email: data.user.email,
-            password: data.user.password,
-            loggedIn: true,
-            transactions: data.user.transactions,
-            categories: data.user.categories,
+          getUser(data.user.username).then((user) => {
+            setUser({
+              id: user._id,
+              username: user.username,
+              email: user.email,
+              password: user.password,
+              transactions: user.transactions,
+              categories: user.categories,
+              loggedIn: true,
+            });
+            localStorage.setItem("user", user);
           });
-          localStorage.setItem("user", data.user);
-        }
-        if (data.token) {
-          localStorage.setItem("token", data.token);
         }
       });
   }
 };
+
 const getUser = async (username) => {
   return fetch(`${API_URL}/users/${username}`)
     .then((res) => res.json())
-    .then((data) => data);
+    .then((data) => {
+      if (data.user) {
+        return data.user;
+      }
+    });
 };
 
 export { checkLoginToken, getUser };

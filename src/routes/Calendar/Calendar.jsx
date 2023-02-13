@@ -26,19 +26,10 @@ function Calendar({
 
   useEffect(() => {
     setCalendarDays(getCalendarDays(day));
-  }, [day, setUser, user.transactions, user.username]);
+  }, [day, user]);
 
   return (
     <main className="calendar-main">
-      <NavBar
-        user={user}
-        setUser={setUser}
-        day={day}
-        setDay={setDay}
-        triggers={triggers}
-        setTriggers={setTriggers}
-      />
-
       <div className="calendar-container">
         <div className="weekday-list">
           {weekdays.map((weekday) => (
