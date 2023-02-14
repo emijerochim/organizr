@@ -14,7 +14,6 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
   const categoriesDatalist = useRef(null);
 
   useEffect(() => {
-    console.log("setting categories");
     setCategories(user.categories);
 
     if (categoriesDatalist.current.children.length === 0) {
@@ -59,6 +58,8 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
   };
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
+
     const newTransaction = {
       date: day.format(),
       id,
@@ -72,7 +73,8 @@ function NewTransaction({ user, setUser, day, triggers, setTriggers }) {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newTransaction),
     })
