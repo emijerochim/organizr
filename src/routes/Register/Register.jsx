@@ -93,12 +93,13 @@ function Register() {
           </div>
         </fieldset>
         <div className="register-submit-container">
-          <input
+          <button
             onClick={onSubmitRegister}
             type="submit"
-            value="Register"
             className="register-submit-button"
-          />
+          >
+            Register
+          </button>
         </div>
         <div className="login-link-container">
           <Link to="/login" className="login-link">

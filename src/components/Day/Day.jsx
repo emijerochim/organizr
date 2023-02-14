@@ -31,7 +31,7 @@ function Day({
   };
 
   return (
-    <div className="calendar-day">
+    <div className="calendar-day" onClick={openDayView}>
       <div className="day-header">
         <div className="day-date-container">
           <p className="day-date">{calendarDay.format("D")}</p>
@@ -49,7 +49,7 @@ function Day({
         </div>
       </div>
 
-      <div className="transactions-container" onClick={openDayView}>
+      <div className="transactions-container">
         {transactions.map((transaction, txIndex) => {
           return (
             <Transaction

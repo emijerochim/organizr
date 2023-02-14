@@ -32,7 +32,9 @@ function Calendar({
         <div className="weekday-list">
           {weekdays.map((weekday) => (
             <div className="weekday-item" key={weekday}>
-              <p>{weekday}</p>
+              <p className="weekday">
+                {window.innerWidth > 768 ? weekday : weekday.slice(0, 1)}
+              </p>
             </div>
           ))}
         </div>

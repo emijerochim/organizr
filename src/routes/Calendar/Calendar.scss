@@ -1,45 +1,61 @@
 @import "../../variables.scss";
 
-.calendar-container {
+.calendar-main {
   display: flex;
-  flex-flow: row wrap;
-  width: 100%;
+  flex-direction: column;
 
-  .weekday-list {
+  .calendar-container {
     display: flex;
-    flex-flow: row;
-    height: 40px;
+    flex-flow: column;
     width: 100%;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    height: 130vh;
+    background-color: #a3dcff;
 
-    .weekday-item {
-      width: $day-width;
-      margin-left: $day-margin + 0.1%;
+    .weekday-list {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-flow: row;
+      height: 40px;
+      width: 100%;
+      margin-bottom: 6vh;
 
-      p {
-        font-size: 1rem;
-        font-weight: 200;
-        font-family: "Roboto", sans-serif;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(226, 244, 255, 1) 40%,
+        rgba(163, 220, 255, 1) 100%
+      );
+
+      .weekday-item {
+        width: $day-width;
+        margin-left: $day-margin + 0.1%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          font-size: 1rem;
+          font-weight: 200;
+          font-family: "Roboto", sans-serif;
+          font-weight: 400;
+        }
       }
     }
-  }
 
-  .calendar {
-    display: flex;
-    flex-flow: row wrap;
-    width: 100%;
+    .calendar {
+      display: flex;
+      flex-flow: row wrap;
+    }
   }
 }
 
+//medfia uqeries
 @media (max-width: 600px) {
-  .calendar-container {
-    .weekday-list {
-      .weekday-item {
-        display: none;
+  .calendar-main {
+    .calendar-container {
+      height: 90vh;
+      .weekday-list {
+        .weekday-item {
+        }
       }
     }
   }

@@ -17,7 +17,11 @@ function Login({ setUser }) {
   const onSubmitLogin = () => {
     fetch(`${API_URL}/login`, {
       method: "post",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
       body: JSON.stringify({
         username: username,
         password: password,
@@ -73,12 +77,13 @@ function Login({ setUser }) {
           </div>
         </fieldset>
         <div className="log-in-submit-container">
-          <input
+          <button
             onClick={onSubmitLogin}
             type="submit"
-            value="Enter"
             className="log-in-submit-button"
-          />
+          >
+            Enter
+          </button>
         </div>
         <div className="register-link-container">
           <Link to="/register" className="register-link">
