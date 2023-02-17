@@ -1,5 +1,0 @@
-{
-  //enable prettier format on save settings.json
-  "editor.formatOnSave": true,
-  "cSpell.words": ["uuidv"]
-}
