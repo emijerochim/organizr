@@ -11,10 +11,19 @@
 
 ## Installation ▶️
 
-1. Clone the repository using `git clone https://github.com/emijerochim/smartbrain.git`.
-2. Enter the project directory using `cd smartbrain`.
+1. Clone the repository using `git clone https://github.com/emijerochim/organizr.git`.
+2. Enter the project directory using `cd organizr`.
 3. Install the required packages by running `npm install`.
 4. Run the app with `npm run dev`.
+
+<br></br>
+## Features 🚀
+
+- User registration and login through JWT Authentication
+- Calendar
+- Transactions CRUD
+- Category CRUD
+- Balance calculation
 
 <br></br>
 ## Stack 🧰
@@ -34,30 +43,16 @@
 ### 📚 Libraries
 * JWT, Moment.js
 
-### 📂 Database
-```
-{
- "username": String,
- "email": String,
- "password": String,
-
- "transactions": [{
-  "amount": Number,
-  "date": ISODate,
-  "description": String,
-  "category": [Category.categorySchema]
- }],
-
- "categories": [{
-  "name": String,
-  "color": String, //hexcode
-  "type": String
- }]
-}
-```
-
 ### ☁️ Deploy
 * GitHub Pages
+
+<br></br>
+## Contact 👋
+
+- 💼 You can see my portfolio at <a href="https://emijerochim.com/">emijerochim.com</a>
+- ✉️ Mail me at <a href="mailto:dev@emijerochim.com/">dev@emijerochim.com</a></p>
+
+<br></br>
 ________________
 
 ### Demo:
