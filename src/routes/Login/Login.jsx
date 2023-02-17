@@ -90,6 +90,13 @@ function Login({ setUser }) {
             Register
           </Link>
         </div>
+        <div className="test-login-data-container">
+          <p className="test-login-data">
+            If you want to test the app use these credentials
+          </p>
+          <p className="test-login-data">Username: test</p>
+          <p className="test-login-data">Password: TEST1234</p>
+        </div>
       </div>
     </main>
   );

@@ -5,6 +5,7 @@ import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
 import Calendar from "./routes/Calendar/Calendar";
 import NavBar from "./routes/Calendar/NavBar";
+import Footer from "./components/Footer/Footer";
 import EditTransaction from "./components/Transaction/EditTransaction";
 import NewTransaction from "./components/Transaction/NewTransaction";
 import EditCategory from "./components/Category/EditCategory";
@@ -83,6 +84,8 @@ function App() {
                   triggers={triggers}
                   setTriggers={setTriggers}
                 />
+
+                <Footer />
                 {
                   <main className="triggers-main">
                     {triggers.newTransaction ? (
