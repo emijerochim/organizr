@@ -1,6 +1,6 @@
 ## 👁️‍🗨️ organizr
 
-<img src="https://github.com/emijerochim/smartbrain/blob/master/src/assets/ui.PNG" height="350px">
+<img src="https://github.com/emijerochim/organizr/blob/master/src/assets/ui.PNG" height="350px">
 
 <br></br>
 
