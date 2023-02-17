@@ -1,10 +1,10 @@
 ## 👁️‍🗨️ organizr
 
 <div>
-  <img src="https://github.com/emijerochim/organizr/blob/master/src/assets/1.PNG" height="350px">
+  <img src="https://github.com/emijerochim/organizr/blob/master/src/assets/1.jpg" height="350px">
   <img src="https://github.com/emijerochim/organizr/blob/master/src/assets/2.PNG" height="350px">
-  <img src="https://github.com/emijerochim/organizr/blob/master/src/assets/3.PNG" height="350px">
-  <img src="https://github.com/emijerochim/organizr/blob/master/src/assets/4.PNG" height="350px">
+  <img src="https://github.com/emijerochim/organizr/blob/master/src/assets/3.jpg" height="350px">
+  <img src="https://github.com/emijerochim/organizr/blob/master/src/assets/4.jpg" height="350px">
 </div>
 
 <br></br>
