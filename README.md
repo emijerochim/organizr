@@ -46,7 +46,7 @@ _________________________
 ________________
 
 ### Demo:
-* [emijerochim.com/organizr](http://emijerochim.com/organizr)
+* [https://emijerochim.github.io/organizr](https://emijerochim.github.io/organizr)
 
 ### Frontend code:
 * [github.com/emijerochim/organizr](http://github.com/emijerochim/organizr)
