@@ -1,8 +1,18 @@
 ## 👁️‍🗨️ organizr
 
-It auths the login with a users database in MongoDB Atlas, gets transactions from the backend API, shows them in a month or year view using Chart.js for the data visualization and Moment.js for the calendar
+<img src="https://github.com/emijerochim/smartbrain/blob/master/src/assets/ui.PNG" height="350px">
 
-_________________________
+<br></br>
+
+## Installation ▶️
+
+1. Clone the repository using `git clone https://github.com/emijerochim/smartbrain.git`.
+2. Enter the project directory using `cd smartbrain`.
+3. Install the required packages by running `npm install`.
+4. Run the app with `npm run dev`.
+
+<br></br>
+## Stack 🧰
 
 ### 📱 Frontend
 * HTML5, CSS3, SASS, React.js
@@ -42,7 +52,7 @@ _________________________
 ```
 
 ### ☁️ Deploy
-* Railway
+* GitHub Pages
 ________________
 
 ### Demo:
@@ -53,4 +63,5 @@ ________________
 
 ### Backend code:
 * [github.com/emijerochim/organizr-api](http://github.com/emijerochim/organizr-api)
+
 
