@@ -55,13 +55,16 @@
 <br></br>
 ________________
 
-### Demo:
-* [https://emijerochim.github.io/organizr](https://emijerochim.github.io/organizr)
 
 ### Frontend code:
 * [github.com/emijerochim/organizr](http://github.com/emijerochim/organizr)
 
 ### Backend code:
 * [github.com/emijerochim/organizr-api](http://github.com/emijerochim/organizr-api)
+
+
+<br></br>
+
+### [🧠 Try the demo](https://emijerochim.github.io/organizr)
 
 
