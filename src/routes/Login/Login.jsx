@@ -1,7 +1,9 @@
+import API_URL from "../../util/env";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
-import API_URL from "../../util/env";
 
 function Login({ setUser }) {
   const [username, setUsername] = useState("");
@@ -12,6 +14,16 @@ function Login({ setUser }) {
   };
   const onPasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  const toastConfig = {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
   };
 
   const onSubmitLogin = () => {
@@ -27,7 +39,18 @@ function Login({ setUser }) {
         password: password,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 400) {
+          toast.error("Email not found", toastConfig);
+        }
+        if (res.status === 401) {
+          toast.error("Password incorrect", toastConfig);
+        }
+        if (res.status === 200) {
+          toast.success("Login successful", toastConfig);
+        }
+        return res.json();
+      })
       .then((data) => {
         if (data.user) {
           setUser({
@@ -48,6 +71,7 @@ function Login({ setUser }) {
 
   return (
     <main>
+      <ToastContainer />
       <div className="log-in-container">
         <fieldset id="log_up" className="log-in-fieldset">
           <legend className="log-in-legend">Log In</legend>

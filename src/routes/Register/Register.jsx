@@ -1,7 +1,9 @@
+import API_URL from "../../util/env";
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Register.scss";
-import API_URL from "../../util/env";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -19,6 +21,16 @@ function Register() {
     setPassword(event.target.value);
   };
 
+  const toastConfig = {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  };
+
   const onSubmitRegister = () => {
     fetch(`${API_URL}/register`, {
       method: "post",
@@ -32,7 +44,27 @@ function Register() {
         password: password,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 400) {
+          toast.error("Email format is invalid", toastConfig);
+        }
+        if (res.status === 401) {
+          toast.error("Password should have 8 to 20 characters", toastConfig);
+        }
+        if (res.status === 402) {
+          toast.error("Username is already taken", toastConfig);
+        }
+        if (res.status === 403) {
+          toast.error("Email is already taken", toastConfig);
+        }
+        if (res.status === 404) {
+          toast.error("Username format is invalid", toastConfig);
+        }
+        if (res.status === 200) {
+          toast.success("Registration successful", toastConfig);
+        }
+        res.json();
+      })
       .then((data) => {
         if (data.username) {
           setUsername({
@@ -50,6 +82,7 @@ function Register() {
     <Navigate to="/login" />
   ) : (
     <main>
+      <ToastContainer />
       <div className="register-container">
         <fieldset id="sign_up" className="register-fieldset">
           <legend className="register-legend">Register</legend>
