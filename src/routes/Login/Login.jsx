@@ -32,7 +32,6 @@ function Login({ setUser }) {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
         username: username,
@@ -41,7 +40,7 @@ function Login({ setUser }) {
     })
       .then((res) => {
         if (res.status === 400) {
-          toast.error("Email not found", toastConfig);
+          toast.error("Username not found", toastConfig);
         }
         if (res.status === 401) {
           toast.error("Password incorrect", toastConfig);
