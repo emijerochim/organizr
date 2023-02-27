@@ -37,9 +37,6 @@
 ### 💾 Database
 * MongoDB
 
-### 🧰 Tools
-* Git, VS Code, Nodemon, Trello
-
 ### 📚 Libraries
 * JWT, Moment.js
 
